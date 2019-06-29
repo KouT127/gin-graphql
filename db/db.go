@@ -3,6 +3,7 @@ package db
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"go-rest/entities"
 )
 
 var (
@@ -10,7 +11,6 @@ var (
 	err error
 )
 
-// Init is initialize db from main function
 func Init() {
 	DBMS := "mysql"
 	USER := "root"
@@ -24,6 +24,11 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	autoMigration()
+}
+
+func autoMigration() {
+	db.AutoMigrate(&entities.User{})
 }
 
 func GetDB() *gorm.DB {
