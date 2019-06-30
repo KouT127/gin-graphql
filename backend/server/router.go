@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-rest/backend/handlers"
-	"go-rest/backend/middlewares"
+	"gin-sample/backend/handlers"
+	"gin-sample/backend/middlewares"
 )
 
 func NewRouter() *gin.Engine {
