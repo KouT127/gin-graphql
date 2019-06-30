@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go-rest/db"
-	"go-rest/server"
+	"go-rest/backend/db"
+	"go-rest/backend/server"
 )
 
 func main() {
