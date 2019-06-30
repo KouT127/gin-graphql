@@ -17,13 +17,14 @@ func Init() {
 	PASS := ""
 	PROTOCOL := "tcp(localhost:3306)"
 	DBNAME := "go_tutorial"
-	CHARSET := "charset=utf8"
+	CHARSET := "charset=utf8&parseTime=true"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + CHARSET
 	db, err = gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		panic(err)
 	}
+	db.LogMode(true)
 	autoMigration()
 }
 

@@ -14,6 +14,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/health", health.Status)
 	user := new(handlers.UserHandler)
 	router.GET("/user", user.Create)
+	router.GET("/users", user.Get)
 	//router.Use(middlewares.AuthMiddleware())
 	//
 	//v1 := router.Group("v1")
