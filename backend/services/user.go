@@ -2,8 +2,8 @@ package services
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-rest/db"
-	"go-rest/entities"
+	"go-rest/backend/db"
+	"go-rest/backend/entities"
 )
 
 type User entities.User

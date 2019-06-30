@@ -2,13 +2,15 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-rest/handlers"
+	"go-rest/backend/handlers"
+	"go-rest/backend/middlewares"
 )
 
 func NewRouter() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(middlewares.CORSMiddleware())
 
 	health := new(handlers.HealthHandler)
 	router.GET("/health", health.Status)

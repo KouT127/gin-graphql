@@ -3,7 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go-rest/services"
+	"go-rest/backend/services"
 	"net/http"
 )
 
