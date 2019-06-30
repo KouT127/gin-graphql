@@ -1,11 +1,11 @@
 package main
 
 import (
-	"gin-sample/backend/db"
+	"gin-sample/backend/database"
 	"gin-sample/backend/server"
 )
 
 func main() {
-	db.Init()
+	database.Init()
 	server.Init()
 }

@@ -1,10 +1,14 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
+	"gin-sample/backend/database"
 	"gin-sample/backend/handlers"
 	"gin-sample/backend/middlewares"
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
+
+var db *gorm.DB
 
 func NewRouter() *gin.Engine {
 	router := gin.New()
@@ -12,20 +16,26 @@ func NewRouter() *gin.Engine {
 	router.Use(gin.Recovery())
 	router.Use(middlewares.CORSMiddleware())
 
-	health := new(handlers.HealthHandler)
-	router.GET("/health", health.Status)
-	user := new(handlers.UserHandler)
-	router.GET("/user", user.Create)
-	router.GET("/users", user.Get)
-	//router.Use(middlewares.AuthMiddleware())
-	//
-	//v1 := router.Group("v1")
-	//{
-	//	userGroup := v1.Group("user")
-	//	{
-	//		user := new(controllers.UserController)
-	//		userGroup.GET("/:id", user.Retrieve)
-	//	}
-	//}
+	newHealthHandler(router)
+	v1 := router.Group("v1")
+	{
+		newUserHandler(v1)
+	}
 	return router
+}
+
+func newHealthHandler(router *gin.Engine) {
+	health := new(handlers.HealthHandler)
+	router.GET("health/", health.Status)
+}
+
+func newUserHandler(gr *gin.RouterGroup) {
+	userGr := gr.Group("users/")
+	{
+		user := handlers.NewUserHandler(database.GetDB())
+		userGr.GET("", user.Get)
+		userGr.POST("", user.Create)
+		userGr.PUT(":id/", user.Update)
+		userGr.DELETE(":id/", user.Delete)
+	}
 }
