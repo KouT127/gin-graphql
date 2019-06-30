@@ -17,9 +17,9 @@ func Init() {
 	PASS := ""
 	PROTOCOL := "tcp(localhost:3306)"
 	DBNAME := "go_tutorial"
-	CHARSET := "charset=utf8&parseTime=true"
+	OPTION := "charset=utf8&parseTime=true"
 
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + CHARSET
+	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + OPTION
 	db, err = gorm.Open(DBMS, CONNECT)
 	if err != nil {
 		panic(err)
