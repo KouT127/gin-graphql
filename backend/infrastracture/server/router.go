@@ -37,7 +37,7 @@ func newUserHandler(gr *gin.RouterGroup) {
 	{
 
 		ur := gateway.NewUserRepository(database.GetDB())
-		ui := interactor.NewUserInteractor()
+		ui := interactor.NewUserInteractor(ur)
 		uc := controller.NewUserController(ui)
 		userGr.GET("", uc.Get)
 		userGr.POST("", uc.Create)

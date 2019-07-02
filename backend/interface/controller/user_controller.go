@@ -14,9 +14,9 @@ type userController struct {
 	it *interactor.UserInteractor
 }
 
-func NewUserController(it *interactor.UserInteractor) *userController {
+func NewUserController(it interactor.UserInteractor) *userController {
 	return &userController{
-		it: it,
+		it: &it,
 	}
 }
 

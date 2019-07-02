@@ -17,9 +17,9 @@ type userInteractor struct {
 	ur *gateway.UserRepository
 }
 
-func NewUserInteractor(ur *gateway.UserRepository) *userInteractor {
+func NewUserInteractor(ur gateway.UserRepository) *userInteractor {
 	return &userInteractor{
-		ur: ur,
+		ur: &ur,
 	}
 }
 
