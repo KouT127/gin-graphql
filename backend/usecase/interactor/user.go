@@ -1,33 +1,31 @@
 //go:generate mockgen -source=$GOFILE -destination=./mock/mock_$GOFILE -package=$GOPACKAGE
-package services
+package interactor
 
 import (
-	"gin-sample/backend/domain/entities"
-	"github.com/jinzhu/gorm"
+	"gin-sample/backend/domain/model"
+	"gin-sample/backend/interface/gateway"
 )
 
-type User entities.User
+type User model.User
 
 type UserInteractor interface {
 	GetUsers() ([]User, error)
 	CreateUser() (User, error)
-	UpdateUser(id string) (User, error)
-	DeleteUser(id string) (User, error)
 }
 
 type userInteractor struct {
-	db *gorm.DB
+	ur *gateway.UserRepository
 }
 
-func NewUserInteractor(db *gorm.DB) *userInteractor {
+func NewUserInteractor(ur *gateway.UserRepository) *userInteractor {
 	return &userInteractor{
-		db: db,
+		ur: ur,
 	}
 }
 
-func (s *userInteractor) GetUsers() ([]User, error) {
+func (i *userInteractor) GetUsers() ([]User, error) {
 	var users []User
-	s.db.Find(&users)
+	//i.ur.FindAll(&users)
 	return users, nil
 }
 
@@ -39,28 +37,29 @@ func (s *userInteractor) CreateUser() (User, error) {
 		PhotoURL: "",
 		Active:   true,
 	}
-	if err := s.db.Create(&u).Error; err != nil {
-		return u, err
-	}
+	//if err := s.db.Create(&u).Error; err != nil {
+	//	return u, err
+	//}
 	return u, nil
 }
 
-func (s *userInteractor) UpdateUser(id string) (User, error) {
-	var u User
-	s.db.First(&u, "id = ?", id)
-	u.Name = "updated"
-
-	if err := s.db.Save(&u).Error; err != nil {
-		return u, err
-	}
-	return u, nil
-}
-
-func (s *userInteractor) DeleteUser(id string) (User, error) {
-	var u User
-	s.db.First(&u, "id = ?", id)
-	if err := s.db.Delete(&u).Error; err != nil {
-		return u, err
-	}
-	return u, nil
-}
+//
+//func (s *userInteractor) UpdateUser(id string) (User, error) {
+//	var u User
+//	s.db.First(&u, "id = ?", id)
+//	u.Name = "updated"
+//
+//	if err := s.db.Save(&u).Error; err != nil {
+//		return u, err
+//	}
+//	return u, nil
+//}
+//
+//func (s *userInteractor) DeleteUser(id string) (User, error) {
+//	var u User
+//	s.db.First(&u, "id = ?", id)
+//	if err := s.db.Delete(&u).Error; err != nil {
+//		return u, err
+//	}
+//	return u, nil
+//}

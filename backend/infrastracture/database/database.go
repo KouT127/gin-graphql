@@ -1,9 +1,9 @@
 package database
 
 import (
+	"gin-sample/backend/domain/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"gin-sample/backend/entities"
 )
 
 var (
@@ -29,7 +29,7 @@ func Init() {
 }
 
 func autoMigration() {
-	db.AutoMigrate(&entities.User{})
+	db.AutoMigrate(&model.User{})
 }
 
 func GetDB() *gorm.DB {

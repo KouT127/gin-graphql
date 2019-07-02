@@ -1,9 +1,12 @@
 package server
 
 import (
-	"gin-sample/backend/handlers"
-	"gin-sample/backend/infrastractures/database"
-	"gin-sample/backend/infrastractures/middlewares"
+	"gin-sample/backend/infrastracture/database"
+	"gin-sample/backend/infrastracture/handlers"
+	"gin-sample/backend/infrastracture/middlewares"
+	"gin-sample/backend/interface/controller"
+	"gin-sample/backend/interface/gateway"
+	"gin-sample/backend/usecase/interactor"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
@@ -32,10 +35,13 @@ func newHealthHandler(router *gin.Engine) {
 func newUserHandler(gr *gin.RouterGroup) {
 	userGr := gr.Group("users/")
 	{
-		user := handlers.NewUserHandler(database.GetDB())
-		userGr.GET("", user.Get)
-		userGr.POST("", user.Create)
-		userGr.PUT(":id/", user.Update)
-		userGr.DELETE(":id/", user.Delete)
+
+		ur := gateway.NewUserRepository(database.GetDB())
+		ui := interactor.NewUserInteractor()
+		uc := controller.NewUserController(ui)
+		userGr.GET("", uc.Get)
+		userGr.POST("", uc.Create)
+		//userGr.PUT(":id/", uc.Update)
+		//userGr.DELETE(":id/", uc.Delete)
 	}
 }
