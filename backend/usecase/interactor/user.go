@@ -2,36 +2,36 @@
 package services
 
 import (
-	"gin-sample/backend/entities"
+	"gin-sample/backend/domain/entities"
 	"github.com/jinzhu/gorm"
 )
 
 type User entities.User
 
-type UserService interface {
+type UserInteractor interface {
 	GetUsers() ([]User, error)
 	CreateUser() (User, error)
 	UpdateUser(id string) (User, error)
 	DeleteUser(id string) (User, error)
 }
 
-type userService struct {
+type userInteractor struct {
 	db *gorm.DB
 }
 
-func NewUserService(db *gorm.DB) *userService {
-	return &userService{
+func NewUserInteractor(db *gorm.DB) *userInteractor {
+	return &userInteractor{
 		db: db,
 	}
 }
 
-func (s *userService) GetUsers() ([]User, error) {
+func (s *userInteractor) GetUsers() ([]User, error) {
 	var users []User
 	s.db.Find(&users)
 	return users, nil
 }
 
-func (s *userService) CreateUser() (User, error) {
+func (s *userInteractor) CreateUser() (User, error) {
 	u := User{
 		Name:     "",
 		BirthDay: "",
@@ -45,7 +45,7 @@ func (s *userService) CreateUser() (User, error) {
 	return u, nil
 }
 
-func (s *userService) UpdateUser(id string) (User, error) {
+func (s *userInteractor) UpdateUser(id string) (User, error) {
 	var u User
 	s.db.First(&u, "id = ?", id)
 	u.Name = "updated"
@@ -56,7 +56,7 @@ func (s *userService) UpdateUser(id string) (User, error) {
 	return u, nil
 }
 
-func (s *userService) DeleteUser(id string) (User, error) {
+func (s *userInteractor) DeleteUser(id string) (User, error) {
 	var u User
 	s.db.First(&u, "id = ?", id)
 	if err := s.db.Delete(&u).Error; err != nil {

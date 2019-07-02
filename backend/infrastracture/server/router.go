@@ -1,9 +1,9 @@
 package server
 
 import (
-	"gin-sample/backend/database"
 	"gin-sample/backend/handlers"
-	"gin-sample/backend/middlewares"
+	"gin-sample/backend/infrastractures/database"
+	"gin-sample/backend/infrastractures/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
