@@ -35,7 +35,6 @@ func newHealthHandler(router *gin.Engine) {
 func newUserHandler(gr *gin.RouterGroup) {
 	userGr := gr.Group("users/")
 	{
-
 		ur := gateway.NewUserRepository(database.GetDB())
 		ui := interactor.NewUserInteractor(ur)
 		uc := controller.NewUserController(ui)

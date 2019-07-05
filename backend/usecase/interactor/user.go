@@ -2,44 +2,46 @@
 package interactor
 
 import (
+	"fmt"
 	"gin-sample/backend/domain/model"
 	"gin-sample/backend/interface/gateway"
 )
 
-type User model.User
-
 type UserInteractor interface {
-	GetUsers() ([]User, error)
-	CreateUser() (User, error)
+	GetUsers() ([]*model.User, error)
+	CreateUser() (model.User, error)
 }
 
 type userInteractor struct {
-	ur *gateway.UserRepository
+	ur gateway.UserRepository
 }
 
 func NewUserInteractor(ur gateway.UserRepository) *userInteractor {
 	return &userInteractor{
-		ur: &ur,
+		ur: ur,
 	}
 }
 
-func (i *userInteractor) GetUsers() ([]User, error) {
-	var users []User
-	//i.ur.FindAll(&users)
+func (i *userInteractor) GetUsers() ([]*model.User, error) {
+	users, err := i.ur.FindAll()
+	if err != nil {
+		fmt.Print("Interactor")
+	}
 	return users, nil
 }
 
-func (s *userInteractor) CreateUser() (User, error) {
-	u := User{
+func (s *userInteractor) CreateUser() (model.User, error) {
+
+	u := model.User{
 		Name:     "",
 		BirthDay: "",
 		Gender:   "",
 		PhotoURL: "",
 		Active:   true,
 	}
-	//if err := s.db.Create(&u).Error; err != nil {
-	//	return u, err
-	//}
+	if _, err := s.ur.Create(&u); err != nil {
+		fmt.Print("Interactor")
+	}
 	return u, nil
 }
 
