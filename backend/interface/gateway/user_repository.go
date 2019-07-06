@@ -6,6 +6,7 @@ import (
 	"gin-sample/backend/domain/model"
 	"gin-sample/backend/usecase/form"
 	"github.com/jinzhu/gorm"
+	"math"
 )
 
 type UserRepository interface {
@@ -60,5 +61,5 @@ func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) 
 func (ur *userRepository) GetUserMaxPage(limit int) int {
 	var cnt int
 	ur.db.Model(&[]model.User{}).Count(&cnt)
-	return cnt/limit + 1
+	return int(math.Ceil(float64(cnt) / float64(limit)))
 }
