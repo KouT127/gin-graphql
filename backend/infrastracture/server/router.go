@@ -30,11 +30,11 @@ func NewRouter() *gin.Engine {
 
 func newHealthHandler(router *gin.Engine) {
 	health := new(handlers.HealthHandler)
-	router.GET("health/", health.Status)
+	router.GET("health", health.Status)
 }
 
 func newUserHandler(gr *gin.RouterGroup) {
-	userGr := gr.Group("users/")
+	userGr := gr.Group("users")
 	{
 		ur := gateway.NewUserRepository(database.GetDB())
 		up := presenter.NewUserPresenter()

@@ -6,12 +6,13 @@ import (
 	"gin-sample/backend/domain/model"
 	"gin-sample/backend/interface/gateway"
 	"gin-sample/backend/interface/presenter"
+	"gin-sample/backend/usecase/form"
 	"gin-sample/backend/usecase/response"
 )
 
 type UserInteractor interface {
-	GetUsers() (response.UsersResponse, error)
-	CreateUser() (model.User, error)
+	GetUsers(pf *form.Pagination) (response.UsersResponse, error)
+	CreateUser(frm *form.UserForm) (model.User, error)
 }
 
 type userInteractor struct {
@@ -26,8 +27,8 @@ func NewUserInteractor(ur gateway.UserRepository, up presenter.UserPresenter) *u
 	}
 }
 
-func (i *userInteractor) GetUsers() (response.UsersResponse, error) {
-	users, err := i.ur.FindAll()
+func (i *userInteractor) GetUsers(pf *form.Pagination) (response.UsersResponse, error) {
+	users, err := i.ur.FindAll(pf)
 	if err != nil {
 		fmt.Print("Interactor")
 	}
@@ -35,12 +36,11 @@ func (i *userInteractor) GetUsers() (response.UsersResponse, error) {
 	return res, nil
 }
 
-func (s *userInteractor) CreateUser() (model.User, error) {
-
+func (s *userInteractor) CreateUser(frm *form.UserForm) (model.User, error) {
 	u := model.User{
-		Name:     "",
+		Name:     frm.Name,
 		BirthDay: "",
-		Gender:   "",
+		Gender:   frm.Gender,
 		PhotoURL: "",
 		Active:   true,
 	}

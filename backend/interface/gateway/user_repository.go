@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"gin-sample/backend/domain/model"
+	"gin-sample/backend/usecase/form"
 	"github.com/jinzhu/gorm"
 )
 
 type UserRepository interface {
-	FindAll() ([]*model.User, error)
+	FindAll(p *form.Pagination) ([]*model.User, error)
 	Create(user *model.User) (*model.User, error)
 	getPointerList(rows *sql.Rows) ([]*model.User, error)
 }
@@ -22,8 +23,10 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 		db: db,
 	}
 }
-func (ur *userRepository) FindAll() ([]*model.User, error) {
-	rows, err := ur.db.Model(&model.User{}).Rows()
+func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
+	u := ur.db.Model(&model.User{})
+	u = p.Paging(u)
+	rows, err := u.Rows()
 	defer rows.Close()
 	users, err := ur.getPointerList(rows)
 	if err != nil {
@@ -43,7 +46,7 @@ func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) 
 	var list []*model.User
 	for rows.Next() {
 		mem := &model.User{}
-		err:=ur.db.ScanRows(rows, &mem)
+		err := ur.db.ScanRows(rows, &mem)
 		if err != nil {
 			fmt.Print(err.Error())
 			return list, err
