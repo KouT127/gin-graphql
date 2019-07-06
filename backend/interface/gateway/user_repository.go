@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"database/sql"
+	"fmt"
 	"gin-sample/backend/domain/model"
 	"github.com/jinzhu/gorm"
 )
@@ -22,7 +23,8 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 func (ur *userRepository) FindAll() ([]*model.User, error) {
-	rows, err := ur.db.Find(&model.User{}).Rows()
+
+	rows, err := ur.db.Model(&model.User{}).Rows()
 	users, err := ur.getPointerList(rows)
 	if err != nil {
 		return users, nil
@@ -38,11 +40,12 @@ func (ur *userRepository) Create(user *model.User) (*model.User, error) {
 }
 
 func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) {
-	list := []*model.User{}
+	var list []*model.User
 	for rows.Next() {
 		mem := &model.User{}
-		err := rows.Scan(&mem.ID, &mem.Name, &mem.BirthDay, &mem.CreatedAt)
+		err:=ur.db.ScanRows(rows, &mem)
 		if err != nil {
+			fmt.Print(err.Error())
 			return list, err
 		}
 		list = append(list, mem)
