@@ -11,6 +11,7 @@ import (
 type UserRepository interface {
 	FindAll(p *form.Pagination) ([]*model.User, error)
 	Create(user *model.User) (*model.User, error)
+	GetUserMaxPage(limit int) int
 	getPointerList(rows *sql.Rows) ([]*model.User, error)
 }
 
@@ -54,4 +55,10 @@ func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) 
 		list = append(list, mem)
 	}
 	return list, nil
+}
+
+func (ur *userRepository) GetUserMaxPage(limit int) int {
+	var cnt int
+	ur.db.Model(&[]model.User{}).Count(&cnt)
+	return cnt/limit + 1
 }

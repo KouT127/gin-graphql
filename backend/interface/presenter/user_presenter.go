@@ -6,7 +6,7 @@ import (
 )
 
 type UserPresenter interface {
-	PresentUsers(us []*model.User) response.UsersResponse
+	PresentUsers(us []*model.User, mp int) response.UsersResponse
 }
 
 type userPresenter struct{}
@@ -15,7 +15,7 @@ func NewUserPresenter() *userPresenter {
 	return &userPresenter{}
 }
 
-func (h userPresenter) PresentUsers(us []*model.User) response.UsersResponse {
+func (h userPresenter) PresentUsers(us []*model.User, maxPage int) response.UsersResponse {
 	var usrAry []*response.UserResponse
 	for _, u := range us {
 		user := response.UserResponse{
@@ -25,7 +25,7 @@ func (h userPresenter) PresentUsers(us []*model.User) response.UsersResponse {
 		}
 		usrAry = append(usrAry, &user)
 	}
-	res := response.UsersResponse{Users: usrAry}
+	res := response.UsersResponse{MaxPage: maxPage, Users: usrAry}
 	return res
 }
 

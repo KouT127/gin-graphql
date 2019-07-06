@@ -32,7 +32,8 @@ func (i *userInteractor) GetUsers(pf *form.Pagination) (response.UsersResponse, 
 	if err != nil {
 		fmt.Print("Interactor")
 	}
-	res := i.up.PresentUsers(users)
+	mp := i.ur.GetUserMaxPage(pf.Limit)
+	res := i.up.PresentUsers(users, mp)
 	return res, nil
 }
 

@@ -1,7 +1,6 @@
 package form
 
 import (
-	"gin-sample/backend/domain/model"
 	"github.com/jinzhu/gorm"
 )
 
@@ -26,10 +25,4 @@ func (pg Pagination) Paging(db *gorm.DB) *gorm.DB {
 	}
 	c := l*p
 	return db.Offset(c).Limit(l)
-}
-
-func (p Pagination) GetUserMaxPage(db *gorm.DB) int {
-	var cnt int
-	db.Model(&[]model.User{}).Count(&cnt)
-	return cnt / p.Limit
 }

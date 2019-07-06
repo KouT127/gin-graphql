@@ -7,5 +7,6 @@ type UserResponse struct {
 }
 
 type UsersResponse struct {
-	Users []*UserResponse
+	MaxPage int
+	Users   []*UserResponse
 }
