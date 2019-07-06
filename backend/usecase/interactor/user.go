@@ -5,29 +5,34 @@ import (
 	"fmt"
 	"gin-sample/backend/domain/model"
 	"gin-sample/backend/interface/gateway"
+	"gin-sample/backend/interface/presenter"
+	"gin-sample/backend/usecase/response"
 )
 
 type UserInteractor interface {
-	GetUsers() ([]*model.User, error)
+	GetUsers() (response.UsersResponse, error)
 	CreateUser() (model.User, error)
 }
 
 type userInteractor struct {
 	ur gateway.UserRepository
+	up presenter.UserPresenter
 }
 
-func NewUserInteractor(ur gateway.UserRepository) *userInteractor {
+func NewUserInteractor(ur gateway.UserRepository, up presenter.UserPresenter) *userInteractor {
 	return &userInteractor{
 		ur: ur,
+		up: up,
 	}
 }
 
-func (i *userInteractor) GetUsers() ([]*model.User, error) {
+func (i *userInteractor) GetUsers() (response.UsersResponse, error) {
 	users, err := i.ur.FindAll()
 	if err != nil {
 		fmt.Print("Interactor")
 	}
-	return users, nil
+	res := i.up.PresentUsers(users)
+	return res, nil
 }
 
 func (s *userInteractor) CreateUser() (model.User, error) {

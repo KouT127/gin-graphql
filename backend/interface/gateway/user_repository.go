@@ -23,7 +23,6 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 func (ur *userRepository) FindAll() ([]*model.User, error) {
-
 	rows, err := ur.db.Model(&model.User{}).Rows()
 	defer rows.Close()
 	users, err := ur.getPointerList(rows)

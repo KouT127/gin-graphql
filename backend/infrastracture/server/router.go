@@ -6,6 +6,7 @@ import (
 	"gin-sample/backend/infrastracture/middlewares"
 	"gin-sample/backend/interface/controller"
 	"gin-sample/backend/interface/gateway"
+	"gin-sample/backend/interface/presenter"
 	"gin-sample/backend/usecase/interactor"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -36,7 +37,8 @@ func newUserHandler(gr *gin.RouterGroup) {
 	userGr := gr.Group("users/")
 	{
 		ur := gateway.NewUserRepository(database.GetDB())
-		ui := interactor.NewUserInteractor(ur)
+		up := presenter.NewUserPresenter()
+		ui := interactor.NewUserInteractor(ur, up)
 		uc := controller.NewUserController(ui)
 		userGr.GET("", uc.Get)
 		userGr.POST("", uc.Create)
