@@ -26,7 +26,7 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
-	u := ur.db.Model(&model.User{})
+	u := ur.db.Model(&model.User{}).Order("-updated_at")
 	u = p.Paging(u)
 	rows, err := u.Rows()
 	defer rows.Close()
