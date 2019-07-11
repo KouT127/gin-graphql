@@ -2,12 +2,14 @@ package server
 
 import (
 	"gin-sample/backend/infrastracture/database"
+	"gin-sample/backend/infrastracture/graphql"
 	"gin-sample/backend/infrastracture/handlers"
 	"gin-sample/backend/infrastracture/middlewares"
 	"gin-sample/backend/interface/controller"
 	"gin-sample/backend/interface/gateway"
 	"gin-sample/backend/interface/presenter"
 	"gin-sample/backend/usecase/interactor"
+	"github.com/99designs/gqlgen/handler"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
@@ -15,17 +17,20 @@ import (
 var db *gorm.DB
 
 func NewRouter() *gin.Engine {
-	router := gin.New()
-	router.Use(gin.Logger())
-	router.Use(gin.Recovery())
-	router.Use(middlewares.CORSMiddleware())
+	r := gin.Default()
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	r.Use(middlewares.CORSMiddleware())
 
-	newHealthHandler(router)
-	v1 := router.Group("v1")
+	r.POST("/query", graphqlHandler())
+	r.GET("/", playgroundHandler())
+
+	newHealthHandler(r)
+	v1 := r.Group("v1")
 	{
 		newUserHandler(v1)
 	}
-	return router
+	return r
 }
 
 func newHealthHandler(router *gin.Engine) {
@@ -44,5 +49,21 @@ func newUserHandler(gr *gin.RouterGroup) {
 		userGr.POST("", uc.Create)
 		//userGr.PUT(":id/", uc.Update)
 		//userGr.DELETE(":id/", uc.Delete)
+	}
+}
+
+func graphqlHandler() gin.HandlerFunc {
+	h := handler.GraphQL(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{}}))
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func playgroundHandler() gin.HandlerFunc {
+	h := handler.Playground("GraphQL", "/query")
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
 	}
 }
