@@ -30,6 +30,7 @@ func Init() {
 
 func autoMigration() {
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Task{})
 }
 
 func GetDB() *gorm.DB {

@@ -7,6 +7,7 @@ import (
 
 type UserPresenter interface {
 	PresentUsers(us []*model.User, mp int) response.UsersResponse
+	PresentUser(u *model.User) response.UserResponse
 }
 
 type userPresenter struct{}
@@ -30,7 +31,6 @@ func (h userPresenter) PresentUsers(us []*model.User, maxPage int) response.User
 }
 
 func (h userPresenter) PresentUser(u *model.User) response.UserResponse {
-
 	res := response.UserResponse{
 		ID:     u.ID,
 		Name:   u.Name,

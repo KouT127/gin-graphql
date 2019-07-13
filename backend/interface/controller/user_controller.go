@@ -47,13 +47,13 @@ func (h userController) Create(c *gin.Context) {
 		print(err.Error())
 		return
 	}
-	u, err := h.it.CreateUser(&frm)
+	res, err := h.it.CreateUser(&frm)
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		fmt.Print(err)
 		return
 	}
-	c.JSON(http.StatusOK, u)
+	c.JSON(http.StatusOK, res)
 }
 
 //func (h userController) Update(c *gin.Context) {

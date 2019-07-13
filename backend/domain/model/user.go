@@ -9,4 +9,5 @@ type User struct {
 	Gender   string `gorm:"gender"`
 	PhotoURL string `gorm:"photo_url"`
 	Active   bool   `gorm:"active"`
+	Tasks    []Task `gorm:"foreignkey:UserRefer"`
 }

@@ -11,7 +11,7 @@ import (
 
 type UserRepository interface {
 	FindAll(p *form.Pagination) ([]*model.User, error)
-	Create(user *model.User) (*model.User, error)
+	Create(frm *form.UserForm) (*model.User, error)
 	GetUserMaxPage(limit int) int
 	getPointerList(rows *sql.Rows) ([]*model.User, error)
 }
@@ -26,7 +26,8 @@ func NewUserRepository(db *gorm.DB) *userRepository {
 	}
 }
 func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
-	u := ur.db.Model(&model.User{}).Order("-updated_at")
+	user := model.User{}
+	u := ur.db.Model(&user).Related(&user.Tasks, "UserRefer").Order("-updated_at")
 	u = p.Paging(u)
 	rows, err := u.Rows()
 	defer rows.Close()
@@ -37,11 +38,35 @@ func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
 	return users, nil
 }
 
-func (ur *userRepository) Create(user *model.User) (*model.User, error) {
-	if err := ur.db.Create(&user).Error; err != nil {
-		return user, err
+func (ur *userRepository) Create(frm *form.UserForm) (*model.User, error) {
+	tx := ur.db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	u := model.User{
+		Name:     frm.Name,
+		BirthDay: "",
+		Gender:   frm.Gender,
+		PhotoURL: "",
+		Active:   true,
 	}
-	return user, nil
+	if err := tx.Create(&u).Error; err != nil {
+		tx.Rollback()
+		return &u, err
+	}
+	task := model.Task{
+		UserRefer:   u.ID,
+		Title:       "test",
+		Description: "testd",
+	}
+	if err := tx.Create(&task).Error; err != nil {
+		tx.Rollback()
+		return &u, err
+	}
+	return &u, tx.Commit().Error
 }
 
 func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) {

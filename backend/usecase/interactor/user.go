@@ -3,7 +3,6 @@ package interactor
 
 import (
 	"fmt"
-	"gin-sample/backend/domain/model"
 	"gin-sample/backend/interface/gateway"
 	"gin-sample/backend/interface/presenter"
 	"gin-sample/backend/usecase/form"
@@ -12,7 +11,7 @@ import (
 
 type UserInteractor interface {
 	GetUsers(pf *form.Pagination) (response.UsersResponse, error)
-	CreateUser(frm *form.UserForm) (model.User, error)
+	CreateUser(frm *form.UserForm) (response.UserResponse, error)
 }
 
 type userInteractor struct {
@@ -37,18 +36,13 @@ func (i *userInteractor) GetUsers(pf *form.Pagination) (response.UsersResponse, 
 	return res, nil
 }
 
-func (s *userInteractor) CreateUser(frm *form.UserForm) (model.User, error) {
-	u := model.User{
-		Name:     frm.Name,
-		BirthDay: "",
-		Gender:   frm.Gender,
-		PhotoURL: "",
-		Active:   true,
-	}
-	if _, err := s.ur.Create(&u); err != nil {
+func (i *userInteractor) CreateUser(frm *form.UserForm) (response.UserResponse, error) {
+	u, err := i.ur.Create(frm)
+	if err != nil {
 		fmt.Print("Interactor")
 	}
-	return u, nil
+	res := i.up.PresentUser(u)
+	return res, nil
 }
 
 //
