@@ -1,4 +1,4 @@
-module gin-sample
+module github.com/KouT127/gin-sample
 
 require (
 	github.com/99designs/gqlgen v0.9.1
@@ -8,7 +8,7 @@ require (
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/jinzhu/gorm v1.9.9
-	github.com/opentracing/opentracing-go v1.1.0
+	github.com/opentracing/opentracing-go v1.1.0 // indirect
 	github.com/uber-go/atomic v1.4.0 // indirect
 	github.com/uber/jaeger-client-go v2.16.0+incompatible
 	github.com/uber/jaeger-lib v2.0.0+incompatible

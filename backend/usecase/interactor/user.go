@@ -3,10 +3,10 @@ package interactor
 
 import (
 	"fmt"
-	"gin-sample/backend/interface/gateway"
-	"gin-sample/backend/interface/presenter"
-	"gin-sample/backend/usecase/form"
-	"gin-sample/backend/usecase/response"
+	"github.com/KouT127/gin-sample/backend/interface/gateway"
+	"github.com/KouT127/gin-sample/backend/interface/presenter"
+	"github.com/KouT127/gin-sample/backend/usecase/form"
+	"github.com/KouT127/gin-sample/backend/usecase/response"
 )
 
 type UserInteractor interface {

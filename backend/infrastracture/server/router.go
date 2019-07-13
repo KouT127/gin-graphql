@@ -1,22 +1,46 @@
 package server
 
 import (
-	"gin-sample/backend/infrastracture/database"
-	"gin-sample/backend/infrastracture/graphql"
-	"gin-sample/backend/infrastracture/handlers"
-	"gin-sample/backend/infrastracture/middlewares"
-	"gin-sample/backend/interface/controller"
-	"gin-sample/backend/interface/gateway"
-	"gin-sample/backend/interface/presenter"
-	"gin-sample/backend/usecase/interactor"
 	"github.com/99designs/gqlgen/handler"
+	"github.com/KouT127/gin-sample/backend/infrastracture/database"
+	"github.com/KouT127/gin-sample/backend/infrastracture/graphql"
+	"github.com/KouT127/gin-sample/backend/infrastracture/handlers"
+	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares"
+	"github.com/KouT127/gin-sample/backend/interface/controller"
+	"github.com/KouT127/gin-sample/backend/interface/gateway"
+	"github.com/KouT127/gin-sample/backend/interface/presenter"
+	"github.com/KouT127/gin-sample/backend/usecase/interactor"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"github.com/uber/jaeger-lib/metrics"
+
+	"github.com/uber/jaeger-client-go"
+	jaegercfg "github.com/uber/jaeger-client-go/config"
+	jaegerlog "github.com/uber/jaeger-client-go/log"
 )
 
 var db *gorm.DB
 
 func NewRouter() *gin.Engine {
+	cfg := jaegercfg.Configuration{
+		Sampler: &jaegercfg.SamplerConfig{
+			Type:  jaeger.SamplerTypeConst,
+			Param: 1,
+		},
+		Reporter: &jaegercfg.ReporterConfig{
+			LogSpans: true,
+		},
+	}
+	jLogger := jaegerlog.StdLogger
+	jMetricsFactory := metrics.NullFactory
+
+	// Initialize tracer with a logger and a metrics factory
+	closer, _ := cfg.InitGlobalTracer(
+		"greetings-server",
+		jaegercfg.Logger(jLogger),
+		jaegercfg.Metrics(jMetricsFactory),
+	)
+	defer closer.Close()
 	r := gin.Default()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())

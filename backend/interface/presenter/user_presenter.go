@@ -1,8 +1,8 @@
 package presenter
 
 import (
-	"gin-sample/backend/domain/model"
-	"gin-sample/backend/usecase/response"
+	"github.com/KouT127/gin-sample/backend/domain/model"
+	"github.com/KouT127/gin-sample/backend/usecase/response"
 )
 
 type UserPresenter interface {

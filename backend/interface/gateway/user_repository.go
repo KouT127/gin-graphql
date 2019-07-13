@@ -3,8 +3,8 @@ package gateway
 import (
 	"database/sql"
 	"fmt"
-	"gin-sample/backend/domain/model"
-	"gin-sample/backend/usecase/form"
+	"github.com/KouT127/gin-sample/backend/domain/model"
+	"github.com/KouT127/gin-sample/backend/usecase/form"
 	"github.com/jinzhu/gorm"
 	"math"
 )

@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"gin-sample/backend/usecase/form"
-	"gin-sample/backend/usecase/interactor"
+	"github.com/KouT127/gin-sample/backend/usecase/form"
+	"github.com/KouT127/gin-sample/backend/usecase/interactor"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

@@ -5,18 +5,18 @@
 npx create-react-app frontend --typescript
 ```
 
-``bash
+```bash
 go generate
 ```
 
-
-## schema.graphql
-スキーマ用
-
 ```
+作成されていない初回のみ
+gqlgen init
+
 gqlgen
 ```
 
 ```
+# GraphQLを試す場合
 https://github.com/prisma/graphql-playground
 ```

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gin-sample/backend/infrastracture/database"
-	"gin-sample/backend/infrastracture/server"
+	"github.com/KouT127/gin-sample/backend/infrastracture/database"
+	"github.com/KouT127/gin-sample/backend/infrastracture/server"
 )
 
 func main() {
