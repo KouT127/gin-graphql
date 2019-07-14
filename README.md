@@ -14,6 +14,8 @@ go generate
 gqlgen init
 
 gqlgen
+
+更新後は、implement methodで追加する。 
 ```
 
 ```

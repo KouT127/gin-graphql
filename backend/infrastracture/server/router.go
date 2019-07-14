@@ -4,6 +4,7 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
 	"github.com/KouT127/gin-sample/backend/infrastracture/graphql"
+	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/infrastracture/handlers"
 	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares"
 	"github.com/KouT127/gin-sample/backend/interface/controller"
@@ -77,7 +78,7 @@ func newUserHandler(gr *gin.RouterGroup) {
 }
 
 func graphqlHandler() gin.HandlerFunc {
-	h := handler.GraphQL(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{}}))
+	h := handler.GraphQL(generated.NewExecutableSchema(generated.Config{Resolvers: &graphql.Resolver{}}))
 
 	return func(c *gin.Context) {
 		h.ServeHTTP(c.Writer, c.Request)
