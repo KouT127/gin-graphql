@@ -1,0 +1,15 @@
+type PageInfo {
+    endCursor: Int
+    hasNextPage: Boolean
+}
+
+interface Connection{
+    totalCount: Int!
+    pageInfo: PageInfo
+}
+
+interface Edge {
+    cursor: String!
+}
+
+scalar Time

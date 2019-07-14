@@ -1,8 +1,9 @@
-//go:generate go run github.com/99designs/gqlgen
 package graphql
 
 import (
 	"context"
+	"github.com/KouT127/gin-sample/backend/infrastracture/database"
+
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/graph"
@@ -27,53 +28,68 @@ func (r *Resolver) User() generated.UserResolver {
 
 type mutationResolver struct{ *Resolver }
 
-func (r *mutationResolver) CreateUser(ctx context.Context, user graph.NewUser) (*model.User, error) {
-	panic("implement me")
+func (r *mutationResolver) CreateUser(ctx context.Context, user graph.UserInput) (*model.User, error) {
+	panic("not implemented")
 }
-
-func (r *mutationResolver) CreateTask(ctx context.Context, input graph.NewTask) (*model.Task, error) {
+func (r *mutationResolver) CreateTask(ctx context.Context, input graph.TaskInput) (*model.Task, error) {
 	panic("not implemented")
 }
 
 type queryResolver struct{ *Resolver }
 
-func (r *queryResolver) FindTaskByID(ctx context.Context, id *int) (*model.Task, error) {
-	panic("implement me")
-}
-
-func (r *queryResolver) FindTasks(ctx context.Context) ([]*model.Task, error) {
-	panic("implement me")
-}
-
-func (r *queryResolver) FindUsers(ctx context.Context) ([]*model.User, error) {
-	panic("implement me")
-}
-
-func (r *queryResolver) GetTaskByID(ctx context.Context, id *int) (*model.Task, error) {
-	return &model.Task{
-		UserRefer:   1,
-		Title:       "1",
-		Description: "1",
-	},nil
-}
-func (r *queryResolver) Tasks(ctx context.Context) ([]*model.Task, error) {
+func (r *queryResolver) Task(ctx context.Context, id *string) (*model.Task, error) {
 	panic("not implemented")
 }
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
+func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
+	db := database.GetDB()
+	var ary []*model.Task
+	rows, err := db.Model(&model.Task{}).Rows()
+	if err != nil {
+		panic(err)
+	}
+	var list []*model.User
+	for rows.Next() {
+		mem := &model.User{}
+		err := db.ScanRows(rows, &mem)
+		if err != nil {
+			panic(err)
+		}
+		list = append(list, mem)
+	}
+	edge := &graph.TaskEdge{
+		Cursor: "",
+		Node:   ary,
+	}
+	endcur := 1
+	nxtPg := true
+
+	pg := &graph.PageInfo{
+		EndCursor:   &endcur,
+		HasNextPage: &nxtPg,
+	}
+	con := &graph.TaskConnection{
+		TotalCount: 0,
+		Edges:      edge,
+		PageInfo:   pg,
+	}
+	return con, nil
+}
+func (r *queryResolver) Users(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.UserConnection, error) {
 	panic("not implemented")
 }
 
 type taskResolver struct{ *Resolver }
 
-func (r *taskResolver) ID(ctx context.Context, obj *model.Task) (int, error) {
+func (r *taskResolver) ID(ctx context.Context, obj *model.Task) (string, error) {
 	panic("not implemented")
 }
+
 func (r *taskResolver) User(ctx context.Context, obj *model.Task) (*model.User, error) {
 	panic("not implemented")
 }
 
 type userResolver struct{ *Resolver }
 
-func (r *userResolver) ID(ctx context.Context, obj *model.User) (int, error) {
+func (r *userResolver) ID(ctx context.Context, obj *model.User) (string, error) {
 	panic("not implemented")
 }

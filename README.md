@@ -13,7 +13,7 @@ go generate
 作成されていない初回のみ
 gqlgen init
 
-gqlgen
+gqlgen -v
 
 更新後は、implement methodで追加する。 
 ```
