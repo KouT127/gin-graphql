@@ -11,3 +11,6 @@ type User struct {
 	Active   bool   `gorm:"active"`
 	Tasks    []Task `gorm:"foreignkey:UserRefer"`
 }
+
+
+func (User) IsNode() {}

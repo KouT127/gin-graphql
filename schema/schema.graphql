@@ -38,16 +38,16 @@ type Query {
 
 type TaskConnection implements Connection{
     totalCount: Int!
-    edges: TaskEdge!
+    edges: [TaskEdge!]!
     pageInfo: PageInfo
 }
 
 type TaskEdge implements Edge{
     cursor: String!
-    node: [Task!]!
+    node: Task!
 }
 
-type Task {
+type Task implements Node{
     id: ID!
     title: String!
     description: String!
@@ -56,16 +56,16 @@ type Task {
 
 type UserConnection implements Connection{
     totalCount: Int!
-    edges: UserEdge!
+    edges: [UserEdge!]!
     pageInfo: PageInfo
 }
 
 type UserEdge implements Edge{
     cursor: String!
-    node: [User!]!
+    node: User!
 }
 
-type User{
+type User implements Node{
     id: ID!
     name: String!
     gender: String!

@@ -42,7 +42,7 @@ func (r *queryResolver) Task(ctx context.Context, id *string) (*model.Task, erro
 }
 func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
 	db := database.GetDB()
-	var ary []*model.Task
+	var task *model.Task
 	rows, err := db.Model(&model.Task{}).Rows()
 	if err != nil {
 		panic(err)
@@ -58,18 +58,19 @@ func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, la
 	}
 	edge := &graph.TaskEdge{
 		Cursor: "",
-		Node:   ary,
+		Node:   task,
 	}
-	endcur := 1
-	nxtPg := true
+	edges := []*graph.TaskEdge{}
+	edges = append(edges, edge)
+	endcur := "test"
 
 	pg := &graph.PageInfo{
 		EndCursor:   &endcur,
-		HasNextPage: &nxtPg,
+		HasNextPage: true,
 	}
 	con := &graph.TaskConnection{
 		TotalCount: 0,
-		Edges:      edge,
+		Edges:     edges ,
 		PageInfo:   pg,
 	}
 	return con, nil

@@ -14,22 +14,28 @@ type Edge interface {
 	IsEdge()
 }
 
+type Node interface {
+	IsNode()
+}
+
 type PageInfo struct {
-	EndCursor   *int  `json:"endCursor"`
-	HasNextPage *bool `json:"hasNextPage"`
+	StartCursor     *string `json:"startCursor"`
+	EndCursor       *string `json:"endCursor"`
+	HasNextPage     bool    `json:"hasNextPage"`
+	HasPreviousPage bool    `json:"hasPreviousPage"`
 }
 
 type TaskConnection struct {
-	TotalCount int       `json:"totalCount"`
-	Edges      *TaskEdge `json:"edges"`
-	PageInfo   *PageInfo `json:"pageInfo"`
+	TotalCount int         `json:"totalCount"`
+	Edges      []*TaskEdge `json:"edges"`
+	PageInfo   *PageInfo   `json:"pageInfo"`
 }
 
 func (TaskConnection) IsConnection() {}
 
 type TaskEdge struct {
-	Cursor string        `json:"cursor"`
-	Node   []*model.Task `json:"node"`
+	Cursor string      `json:"cursor"`
+	Node   *model.Task `json:"node"`
 }
 
 func (TaskEdge) IsEdge() {}
@@ -41,16 +47,16 @@ type TaskInput struct {
 }
 
 type UserConnection struct {
-	TotalCount int       `json:"totalCount"`
-	Edges      *UserEdge `json:"edges"`
-	PageInfo   *PageInfo `json:"pageInfo"`
+	TotalCount int         `json:"totalCount"`
+	Edges      []*UserEdge `json:"edges"`
+	PageInfo   *PageInfo   `json:"pageInfo"`
 }
 
 func (UserConnection) IsConnection() {}
 
 type UserEdge struct {
-	Cursor string        `json:"cursor"`
-	Node   []*model.User `json:"node"`
+	Cursor string      `json:"cursor"`
+	Node   *model.User `json:"node"`
 }
 
 func (UserEdge) IsEdge() {}

@@ -4,7 +4,9 @@ import "github.com/jinzhu/gorm"
 
 type Task struct {
 	gorm.Model
-	UserRefer uint
+	UserRefer   uint
 	Title       string `gorm:"title"`
 	Description string `gorm:"description"`
 }
+
+func (Task) IsNode() {}
