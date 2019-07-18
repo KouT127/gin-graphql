@@ -2,11 +2,11 @@ package graphql
 
 import (
 	"context"
-	"github.com/KouT127/gin-sample/backend/infrastracture/database"
+	"github.com/KouT127/gin-sample/backend/database"
+	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
+	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/graph"
 )
 
 // THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.

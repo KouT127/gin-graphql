@@ -3,10 +3,10 @@ package interactor
 
 import (
 	"fmt"
-	"github.com/KouT127/gin-sample/backend/interface/gateway"
+	"github.com/KouT127/gin-sample/backend/application/form"
+	"github.com/KouT127/gin-sample/backend/application/response"
+	"github.com/KouT127/gin-sample/backend/domain/repository"
 	"github.com/KouT127/gin-sample/backend/interface/presenter"
-	"github.com/KouT127/gin-sample/backend/usecase/form"
-	"github.com/KouT127/gin-sample/backend/usecase/response"
 )
 
 type UserInteractor interface {
@@ -15,11 +15,11 @@ type UserInteractor interface {
 }
 
 type userInteractor struct {
-	ur gateway.UserRepository
+	ur repository.UserRepository
 	up presenter.UserPresenter
 }
 
-func NewUserInteractor(ur gateway.UserRepository, up presenter.UserPresenter) *userInteractor {
+func NewUserInteractor(ur repository.UserRepository, up presenter.UserPresenter) *userInteractor {
 	return &userInteractor{
 		ur: ur,
 		up: up,

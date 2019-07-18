@@ -2,46 +2,22 @@ package server
 
 import (
 	"github.com/99designs/gqlgen/handler"
-	"github.com/KouT127/gin-sample/backend/infrastracture/database"
-	"github.com/KouT127/gin-sample/backend/infrastracture/graphql"
-	"github.com/KouT127/gin-sample/backend/infrastracture/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/infrastracture/handlers"
-	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares"
+	"github.com/KouT127/gin-sample/backend/application/interactor"
+	"github.com/KouT127/gin-sample/backend/database"
+	"github.com/KouT127/gin-sample/backend/infrastracture/datastore"
 	"github.com/KouT127/gin-sample/backend/interface/controller"
-	"github.com/KouT127/gin-sample/backend/interface/gateway"
+	"github.com/KouT127/gin-sample/backend/interface/graphql"
+	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
+	"github.com/KouT127/gin-sample/backend/interface/handlers"
+	"github.com/KouT127/gin-sample/backend/interface/middlewares"
 	"github.com/KouT127/gin-sample/backend/interface/presenter"
-	"github.com/KouT127/gin-sample/backend/usecase/interactor"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/uber/jaeger-lib/metrics"
-
-	"github.com/uber/jaeger-client-go"
-	jaegercfg "github.com/uber/jaeger-client-go/config"
-	jaegerlog "github.com/uber/jaeger-client-go/log"
 )
 
 var db *gorm.DB
 
 func NewRouter() *gin.Engine {
-	cfg := jaegercfg.Configuration{
-		Sampler: &jaegercfg.SamplerConfig{
-			Type:  jaeger.SamplerTypeConst,
-			Param: 1,
-		},
-		Reporter: &jaegercfg.ReporterConfig{
-			LogSpans: true,
-		},
-	}
-	jLogger := jaegerlog.StdLogger
-	jMetricsFactory := metrics.NullFactory
-
-	// Initialize tracer with a logger and a metrics factory
-	closer, _ := cfg.InitGlobalTracer(
-		"greetings-server",
-		jaegercfg.Logger(jLogger),
-		jaegercfg.Metrics(jMetricsFactory),
-	)
-	defer closer.Close()
 	r := gin.Default()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
@@ -66,7 +42,7 @@ func newHealthHandler(router *gin.Engine) {
 func newUserHandler(gr *gin.RouterGroup) {
 	userGr := gr.Group("users")
 	{
-		ur := gateway.NewUserRepository(database.GetDB())
+		ur := datastore.NewUserRepository(database.GetDB())
 		up := presenter.NewUserPresenter()
 		ui := interactor.NewUserInteractor(ur, up)
 		uc := controller.NewUserController(ui)

@@ -1,31 +1,24 @@
-package gateway
+package datastore
 
 import (
 	"database/sql"
 	"fmt"
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	"github.com/KouT127/gin-sample/backend/usecase/form"
+	"github.com/KouT127/gin-sample/backend/application/form"
 	"github.com/jinzhu/gorm"
 	"math"
 )
 
-type UserRepository interface {
-	FindAll(p *form.Pagination) ([]*model.User, error)
-	Create(frm *form.UserForm) (*model.User, error)
-	GetUserMaxPage(limit int) int
-	getPointerList(rows *sql.Rows) ([]*model.User, error)
-}
-
-type userRepository struct {
+type UserRepository struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) *userRepository {
-	return &userRepository{
+func NewUserRepository(db *gorm.DB) *UserRepository {
+	return &UserRepository{
 		db: db,
 	}
 }
-func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
+func (ur *UserRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
 	user := model.User{}
 	u := ur.db.Model(&user).Related(&user.Tasks, "UserRefer").Order("-updated_at")
 	u = p.Paging(u)
@@ -38,7 +31,7 @@ func (ur *userRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
 	return users, nil
 }
 
-func (ur *userRepository) Create(frm *form.UserForm) (*model.User, error) {
+func (ur *UserRepository) Create(frm *form.UserForm) (*model.User, error) {
 	tx := ur.db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -69,7 +62,7 @@ func (ur *userRepository) Create(frm *form.UserForm) (*model.User, error) {
 	return &u, tx.Commit().Error
 }
 
-func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) {
+func (ur *UserRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) {
 	var list []*model.User
 	for rows.Next() {
 		mem := &model.User{}
@@ -83,7 +76,7 @@ func (ur *userRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) 
 	return list, nil
 }
 
-func (ur *userRepository) GetUserMaxPage(limit int) int {
+func (ur *UserRepository) GetUserMaxPage(limit int) int {
 	var cnt int
 	ur.db.Model(&[]model.User{}).Count(&cnt)
 	return int(math.Ceil(float64(cnt) / float64(limit)))
