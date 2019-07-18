@@ -1,7 +1,8 @@
 package database
 
 import (
-	"github.com/KouT127/gin-sample/backend/domain/model"
+	"github.com/KouT127/gin-sample/backend/domain/model/task"
+	"github.com/KouT127/gin-sample/backend/domain/model/user"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -29,8 +30,8 @@ func Init() {
 }
 
 func autoMigration() {
-	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Task{})
+	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&task.Task{})
 }
 
 func NewDB() *gorm.DB {

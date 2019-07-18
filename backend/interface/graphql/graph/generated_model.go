@@ -3,7 +3,8 @@
 package graph
 
 import (
-	"github.com/KouT127/gin-sample/backend/domain/model"
+	"github.com/KouT127/gin-sample/backend/domain/model/task"
+	"github.com/KouT127/gin-sample/backend/domain/model/user"
 )
 
 type Connection interface {
@@ -34,8 +35,8 @@ type TaskConnection struct {
 func (TaskConnection) IsConnection() {}
 
 type TaskEdge struct {
-	Cursor string      `json:"cursor"`
-	Node   *model.Task `json:"node"`
+	Cursor string     `json:"cursor"`
+	Node   *task.Task `json:"node"`
 }
 
 func (TaskEdge) IsEdge() {}
@@ -55,8 +56,8 @@ type UserConnection struct {
 func (UserConnection) IsConnection() {}
 
 type UserEdge struct {
-	Cursor string      `json:"cursor"`
-	Node   *model.User `json:"node"`
+	Cursor string     `json:"cursor"`
+	Node   *user.User `json:"node"`
 }
 
 func (UserEdge) IsEdge() {}

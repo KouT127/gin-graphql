@@ -3,8 +3,9 @@ package datastore
 import (
 	"database/sql"
 	"fmt"
-	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/application/form"
+	task2 "github.com/KouT127/gin-sample/backend/domain/model/task"
+	"github.com/KouT127/gin-sample/backend/domain/model/user"
 	"github.com/jinzhu/gorm"
 	"math"
 )
@@ -18,8 +19,8 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 		db: db,
 	}
 }
-func (ur *UserRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
-	user := model.User{}
+func (ur *UserRepository) FindAll(p *form.Pagination) ([]*user.User, error) {
+	user := user.User{}
 	u := ur.db.Model(&user).Related(&user.Tasks, "UserRefer").Order("-updated_at")
 	u = p.Paging(u)
 	rows, err := u.Rows()
@@ -31,7 +32,7 @@ func (ur *UserRepository) FindAll(p *form.Pagination) ([]*model.User, error) {
 	return users, nil
 }
 
-func (ur *UserRepository) Create(frm *form.UserForm) (*model.User, error) {
+func (ur *UserRepository) Create(frm *form.UserForm) (*user.User, error) {
 	tx := ur.db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -39,7 +40,7 @@ func (ur *UserRepository) Create(frm *form.UserForm) (*model.User, error) {
 		}
 	}()
 
-	u := model.User{
+	u := user.User{
 		Name:     frm.Name,
 		BirthDay: "",
 		Gender:   frm.Gender,
@@ -50,7 +51,7 @@ func (ur *UserRepository) Create(frm *form.UserForm) (*model.User, error) {
 		tx.Rollback()
 		return &u, err
 	}
-	task := model.Task{
+	task := task2.Task{
 		UserRefer:   u.ID,
 		Title:       "test",
 		Description: "testd",
@@ -62,10 +63,10 @@ func (ur *UserRepository) Create(frm *form.UserForm) (*model.User, error) {
 	return &u, tx.Commit().Error
 }
 
-func (ur *UserRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) {
-	var list []*model.User
+func (ur *UserRepository) getPointerList(rows *sql.Rows) ([]*user.User, error) {
+	var list []*user.User
 	for rows.Next() {
-		mem := &model.User{}
+		mem := &user.User{}
 		err := ur.db.ScanRows(rows, &mem)
 		if err != nil {
 			fmt.Print(err.Error())
@@ -78,6 +79,6 @@ func (ur *UserRepository) getPointerList(rows *sql.Rows) ([]*model.User, error) 
 
 func (ur *UserRepository) GetUserMaxPage(limit int) int {
 	var cnt int
-	ur.db.Model(&[]model.User{}).Count(&cnt)
+	ur.db.Model(&[]user.User{}).Count(&cnt)
 	return int(math.Ceil(float64(cnt) / float64(limit)))
 }
