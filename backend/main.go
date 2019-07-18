@@ -7,6 +7,5 @@ import (
 
 func main() {
 	database.Init()
-	r := server.NewRouter()
-	r.Run()
+	server.Init()
 }

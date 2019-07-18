@@ -44,7 +44,7 @@ func (r *queryResolver) Task(ctx context.Context, id *string) (*task.Task, error
 func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
 	db := database.NewDB()
 	var task *task.Task
-	rows, err := db.Model(&task.Task{}).Rows()
+	rows, err := db.Model(&task).Rows()
 	if err != nil {
 		panic(err)
 	}

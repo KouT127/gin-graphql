@@ -11,6 +11,11 @@ import (
 
 var db *gorm.DB
 
+func Init(){
+	r := NewRouter()
+	r.Run()
+}
+
 func NewRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
