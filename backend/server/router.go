@@ -4,7 +4,6 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/interface/graphql"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/interface/handlers"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -21,7 +20,6 @@ func NewRouter() *gin.Engine {
 	r.POST("/query", graphqlHandler())
 	r.GET("/", playgroundHandler())
 
-	newHealthHandler(r)
 	v1 := r.Group("v1")
 	{
 		newUserHandler(v1)
@@ -29,10 +27,6 @@ func NewRouter() *gin.Engine {
 	return r
 }
 
-func newHealthHandler(router *gin.Engine) {
-	health := new(handlers.HealthHandler)
-	router.GET("health", health.Status)
-}
 
 func newUserHandler(gr *gin.RouterGroup) {
 	userGr := gr.Group("users")

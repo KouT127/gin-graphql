@@ -1,3 +1,4 @@
+// go:generate go run github.com/vektah/dataloaden UserLoader int *github.com/KouT127/gin-sample/backend/domain/model.User
 package model
 
 import "github.com/jinzhu/gorm"
@@ -11,6 +12,5 @@ type User struct {
 	Active   bool   `gorm:"active"`
 	Tasks    []Task `gorm:"foreignkey:UserRefer"`
 }
-
 
 func (User) IsNode() {}

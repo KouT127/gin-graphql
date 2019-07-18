@@ -1,3 +1,4 @@
+// go:generate gqlgen
 package graphql
 
 import (
