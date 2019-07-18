@@ -2,7 +2,7 @@ package graphql
 
 import (
 	"context"
-	"github.com/KouT127/gin-sample/backend/database"
+	"github.com/KouT127/gin-sample/backend/infrastracture/database"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 
@@ -41,7 +41,7 @@ func (r *queryResolver) Task(ctx context.Context, id *string) (*model.Task, erro
 	panic("not implemented")
 }
 func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
-	db := database.GetDB()
+	db := database.NewDB()
 	var task *model.Task
 	rows, err := db.Model(&model.Task{}).Rows()
 	if err != nil {
@@ -70,7 +70,7 @@ func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, la
 	}
 	con := &graph.TaskConnection{
 		TotalCount: 0,
-		Edges:     edges ,
+		Edges:      edges,
 		PageInfo:   pg,
 	}
 	return con, nil

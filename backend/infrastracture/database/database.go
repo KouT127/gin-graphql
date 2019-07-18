@@ -33,6 +33,6 @@ func autoMigration() {
 	db.AutoMigrate(&model.Task{})
 }
 
-func GetDB() *gorm.DB {
+func NewDB() *gorm.DB {
 	return db
 }

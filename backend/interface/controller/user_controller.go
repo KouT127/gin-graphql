@@ -8,22 +8,22 @@ import (
 	"net/http"
 )
 
-type UserController interface {
-	Get(c *gin.Context)
-	Create(c *gin.Context)
-}
+//type UserController interface {
+//	Get(c *gin.Context)
+//	Create(c *gin.Context)
+//}
 
-type userController struct {
+type UserController struct {
 	it interactor.UserInteractor
 }
 
-func NewUserController(it interactor.UserInteractor) *userController {
-	return &userController{
+func NewUserController(it interactor.UserInteractor) *UserController {
+	return &UserController{
 		it: it,
 	}
 }
 
-func (h userController) Get(c *gin.Context) {
+func (h UserController) Get(c *gin.Context) {
 	pf := form.Pagination{}
 	err := c.Bind(&pf)
 	if err != nil {
@@ -39,7 +39,7 @@ func (h userController) Get(c *gin.Context) {
 	c.JSON(http.StatusOK, us)
 }
 
-func (h userController) Create(c *gin.Context) {
+func (h UserController) Create(c *gin.Context) {
 	frm := form.UserForm{}
 	err := c.Bind(&frm)
 	if err != nil {
@@ -56,7 +56,7 @@ func (h userController) Create(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
-//func (h userController) Update(c *gin.Context) {
+//func (h UserController) Update(c *gin.Context) {
 //	id := c.Param("id")
 //	u, err := h.it.UpdateUser(id)
 //	if err != nil {
@@ -67,7 +67,7 @@ func (h userController) Create(c *gin.Context) {
 //	c.JSON(http.StatusOK, u)
 //}
 //
-//func (h userController) Delete(c *gin.Context) {
+//func (h UserController) Delete(c *gin.Context) {
 //	id := c.Param("id")
 //	_, err := h.it.DeleteUser(id)
 //	if err != nil {
