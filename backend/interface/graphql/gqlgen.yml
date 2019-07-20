@@ -9,11 +9,11 @@ exec:
   filename: generated/exec.go
 model:
   filename: graph/generated_model.go
-models:
-  User:
-    model: github.com/KouT127/gin-sample/backend/domain/model.User
-  Task:
-    model: github.com/KouT127/gin-sample/backend/domain/model.Task
+#models:
+#  User:
+#    model: github.com/KouT127/gin-sample/backend/domain/model.User
+#  Task:
+#    model: github.com/KouT127/gin-sample/backend/domain/model.Task
 resolver:
   filename: resolver.go
   type: Resolver

@@ -2,11 +2,6 @@
 
 package graph
 
-import (
-	"github.com/KouT127/gin-sample/backend/domain/model/task"
-	"github.com/KouT127/gin-sample/backend/domain/model/user"
-)
-
 type Connection interface {
 	IsConnection()
 }
@@ -19,11 +14,28 @@ type Node interface {
 	IsNode()
 }
 
+type AddTaskPayload struct {
+	ClientMutationID *string `json:"clientMutationId"`
+	Task             *Task   `json:"task"`
+}
+
+type AddUserPayload struct {
+	ClientMutationID *string `json:"clientMutationId"`
+	User             *User   `json:"user"`
+}
+
 type PageInfo struct {
 	StartCursor     *string `json:"startCursor"`
 	EndCursor       *string `json:"endCursor"`
 	HasNextPage     bool    `json:"hasNextPage"`
 	HasPreviousPage bool    `json:"hasPreviousPage"`
+}
+
+type Task struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	User        *User  `json:"user"`
 }
 
 type TaskConnection struct {
@@ -35,8 +47,8 @@ type TaskConnection struct {
 func (TaskConnection) IsConnection() {}
 
 type TaskEdge struct {
-	Cursor string     `json:"cursor"`
-	Node   *task.Task `json:"node"`
+	Cursor string `json:"cursor"`
+	Node   *Task  `json:"node"`
 }
 
 func (TaskEdge) IsEdge() {}
@@ -45,6 +57,13 @@ type TaskInput struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	UserID      string `json:"userId"`
+}
+
+type User struct {
+	ID     string  `json:"id"`
+	Name   string  `json:"name"`
+	Gender string  `json:"gender"`
+	Tasks  []*Task `json:"tasks"`
 }
 
 type UserConnection struct {
@@ -56,8 +75,8 @@ type UserConnection struct {
 func (UserConnection) IsConnection() {}
 
 type UserEdge struct {
-	Cursor string     `json:"cursor"`
-	Node   *user.User `json:"node"`
+	Cursor string `json:"cursor"`
+	Node   *User  `json:"node"`
 }
 
 func (UserEdge) IsEdge() {}
@@ -65,4 +84,9 @@ func (UserEdge) IsEdge() {}
 type UserInput struct {
 	Name   string `json:"name"`
 	Gender string `json:"gender"`
+}
+
+type Users struct {
+	Users *UserConnection `json:"users"`
+	User  *User           `json:"user"`
 }
