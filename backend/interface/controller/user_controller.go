@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/KouT127/gin-sample/backend/application/form"
 	"github.com/KouT127/gin-sample/backend/application/interactor"
+	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -24,19 +25,26 @@ func NewUserController(it interactor.UserInteractor) *UserController {
 }
 
 func (h UserController) Get(c *gin.Context) {
-	pf := form.Pagination{}
-	err := c.Bind(&pf)
-	if err != nil {
-		fmt.Printf(err.Error())
-		return
+	//pf := form.Pagination{}
+	//err := c.Bind(&pf)
+	//if err != nil {
+	//	fmt.Printf(err.Error())
+	//	return
+	//}
+	//us, err := h.it.GetUsers(&pf)
+	//if err != nil {
+	//	c.AbortWithStatus(http.StatusInternalServerError)
+	//	fmt.Print(err)
+	//	return
+	//}
+	u := model.User{
+		Name:     "c",
+		BirthDay: "d",
+		Gender:   "f",
+		PhotoURL: "e",
+		Active:   false,
 	}
-	us, err := h.it.GetUsers(&pf)
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		fmt.Print(err)
-		return
-	}
-	c.JSON(http.StatusOK, us)
+	c.JSON(http.StatusOK, u)
 }
 
 func (h UserController) Create(c *gin.Context) {

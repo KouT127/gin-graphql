@@ -2,12 +2,12 @@ package presenter
 
 import (
 	"github.com/KouT127/gin-sample/backend/application/response"
-	"github.com/KouT127/gin-sample/backend/domain/model/user"
+	"github.com/KouT127/gin-sample/backend/domain/model"
 )
 
 type UserPresenter interface {
-	PresentUsers(us []*user.User, mp int) response.UsersResponse
-	PresentUser(u *user.User) response.UserResponse
+	PresentUsers(us []*model.User, mp int) response.UsersResponse
+	PresentUser(u *model.User) response.UserResponse
 }
 
 type userPresenter struct{}
@@ -16,7 +16,7 @@ func NewUserPresenter() *userPresenter {
 	return &userPresenter{}
 }
 
-func (h userPresenter) PresentUsers(us []*user.User, maxPage int) response.UsersResponse {
+func (h userPresenter) PresentUsers(us []*model.User, maxPage int) response.UsersResponse {
 	var usrAry []*response.UserResponse
 	for _, u := range us {
 		user := response.UserResponse{
@@ -30,7 +30,7 @@ func (h userPresenter) PresentUsers(us []*user.User, maxPage int) response.Users
 	return res
 }
 
-func (h userPresenter) PresentUser(u *user.User) response.UserResponse {
+func (h userPresenter) PresentUser(u *model.User) response.UserResponse {
 	res := response.UserResponse{
 		ID:     u.ID,
 		Name:   u.Name,
