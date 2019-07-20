@@ -7,12 +7,11 @@ type PageInfo {
 
 interface Connection {
     pageInfo: PageInfo
-    edges: [Edge]
+    edges: [Edge!]!
 }
 
 interface Edge {
     cursor: String
-    node: Node!
 }
 
 interface Node {

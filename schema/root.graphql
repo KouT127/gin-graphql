@@ -8,33 +8,3 @@ type Query {
         query: String
     ):TaskConnection
 }
-
-type Users {
-    users(
-        first: Int,
-        after: String,
-        last: Int,
-        before: String,
-        query: String
-    ): UserConnection!
-
-    user(id: ID): User!
-}
-
-type UserConnection implements Connection{
-    totalCount: Int!
-    edges: [UserEdge!]!
-    pageInfo: PageInfo
-}
-
-type UserEdge implements Edge{
-    cursor: String!
-    node: User!
-}
-
-type User {
-    id: ID!
-    name: String!
-    gender: String!
-    tasks: [Task!]!
-}

@@ -1,0 +1,17 @@
+type TaskConnection implements Connection{
+    totalCount: Int!
+    edges: [TaskEdge!]!
+    pageInfo: PageInfo
+}
+
+type TaskEdge implements Edge{
+    cursor: String!
+    node: Task!
+}
+
+type Task {
+    id: ID!
+    title: String!
+    description: String!
+    user: User
+}

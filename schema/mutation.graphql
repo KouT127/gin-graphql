@@ -1,0 +1,25 @@
+type Mutation {
+    addUser(user: UserInput!): AddUserPayload!
+    addTask(input: TaskInput!): AddTaskPayload!
+}
+
+input UserInput {
+    name: String!
+    gender: String!
+}
+
+type AddUserPayload{
+    clientMutationId: String
+    user: User
+}
+
+input TaskInput {
+    title: String!
+    description: String!
+    userId: String!
+}
+
+type AddTaskPayload{
+    clientMutationId: String
+    task: Task
+}
