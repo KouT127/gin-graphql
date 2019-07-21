@@ -36,7 +36,8 @@ func LoaderMiddleware() gin.HandlerFunc {
 				errors = make([]error, len(keys))
 				db := database.NewDB()
 				print("keys:" + strings.Join(keySql, ","))
-				query := db.Table("users").Where("id in ?", strings.Join(keySql, ","))
+				time.Sleep(5 * time.Millisecond)
+				query := db.Table("users").Where("id in (?)", strings.Join(keySql, ","))
 				rows, err := query.Rows()
 				if err != nil {
 					users = append(users, &model.User{})
