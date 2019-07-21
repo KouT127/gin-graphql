@@ -1,10 +1,10 @@
-type TaskConnection implements Connection{
+type TaskConnection {
     totalCount: Int!
     edges: [TaskEdge!]!
     pageInfo: PageInfo
 }
 
-type TaskEdge implements Edge{
+type TaskEdge {
     cursor: String!
     node: Task!
 }

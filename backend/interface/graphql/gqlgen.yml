@@ -9,6 +9,9 @@ exec:
   filename: generated/exec.go
 model:
   filename: graph/generated_model.go
+
+autobind:
+  - github.com/KouT127/gin-sample/backend/domain/model
 #models:
 #  User:
 #    model: github.com/KouT127/gin-sample/backend/domain/model.User

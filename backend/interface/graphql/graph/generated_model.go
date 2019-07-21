@@ -2,6 +2,10 @@
 
 package graph
 
+import (
+	"github.com/KouT127/gin-sample/backend/domain/model"
+)
+
 type Connection interface {
 	IsConnection()
 }
@@ -15,43 +19,14 @@ type Node interface {
 }
 
 type AddTaskPayload struct {
-	ClientMutationID *string `json:"clientMutationId"`
-	Task             *Task   `json:"task"`
+	ClientMutationID *string     `json:"clientMutationId"`
+	Task             *model.Task `json:"task"`
 }
 
 type AddUserPayload struct {
-	ClientMutationID *string `json:"clientMutationId"`
-	User             *User   `json:"user"`
+	ClientMutationID *string     `json:"clientMutationId"`
+	User             *model.User `json:"user"`
 }
-
-type PageInfo struct {
-	StartCursor     *string `json:"startCursor"`
-	EndCursor       *string `json:"endCursor"`
-	HasNextPage     bool    `json:"hasNextPage"`
-	HasPreviousPage bool    `json:"hasPreviousPage"`
-}
-
-type Task struct {
-	ID          string `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	User        *User  `json:"user"`
-}
-
-type TaskConnection struct {
-	TotalCount int         `json:"totalCount"`
-	Edges      []*TaskEdge `json:"edges"`
-	PageInfo   *PageInfo   `json:"pageInfo"`
-}
-
-func (TaskConnection) IsConnection() {}
-
-type TaskEdge struct {
-	Cursor string `json:"cursor"`
-	Node   *Task  `json:"node"`
-}
-
-func (TaskEdge) IsEdge() {}
 
 type TaskInput struct {
 	Title       string `json:"title"`
@@ -59,35 +34,7 @@ type TaskInput struct {
 	UserID      string `json:"userId"`
 }
 
-type User struct {
-	ID     string  `json:"id"`
-	Name   string  `json:"name"`
-	Gender string  `json:"gender"`
-	Tasks  []*Task `json:"tasks"`
-}
-
-type UserConnection struct {
-	TotalCount int         `json:"totalCount"`
-	Edges      []*UserEdge `json:"edges"`
-	PageInfo   *PageInfo   `json:"pageInfo"`
-}
-
-func (UserConnection) IsConnection() {}
-
-type UserEdge struct {
-	Cursor string `json:"cursor"`
-	Node   *User  `json:"node"`
-}
-
-func (UserEdge) IsEdge() {}
-
 type UserInput struct {
 	Name   string `json:"name"`
 	Gender string `json:"gender"`
-}
-
-type Users struct {
-	Users *UserConnection `json:"users"`
-	User  *User           `json:"user"`
-	Tasks *TaskConnection `json:"tasks"`
 }

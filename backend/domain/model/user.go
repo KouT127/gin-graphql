@@ -5,6 +5,15 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+type UserConnection struct {
+	TotalCount int
+	PageInfo PageInfo
+	Edges    []*UserEdge
+}
+type UserEdge struct {
+	Cursor string
+	Node   *User
+}
 type User struct {
 	gorm.Model
 	Name     string `gorm:"name"`
@@ -14,5 +23,3 @@ type User struct {
 	Active   bool   `gorm:"active"`
 	Tasks    []Task `gorm:"foreignkey:UserRefer"`
 }
-
-func (User) IsNode() {}
