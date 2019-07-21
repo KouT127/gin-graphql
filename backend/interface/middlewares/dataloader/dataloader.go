@@ -35,11 +35,13 @@ func LoaderMiddleware() gin.HandlerFunc {
 				}
 				errors = make([]error, len(keys))
 				db := database.NewDB()
-				user := &model.User{}
-				rows, err := db.Find(user, "id in ?", strings.Join(keySql, ",")).Rows()
+				print("keys:" + strings.Join(keySql, ","))
+				query := db.Table("users").Where("id in ?", strings.Join(keySql, ","))
+				rows, err := query.Rows()
 				if err != nil {
+					users = append(users, &model.User{})
 					errors = append(errors, err)
-					return nil, errors
+					return users, errors
 				}
 				users = make([]*model.User, len(keys))
 				for i, _ := range keys {
@@ -84,16 +86,12 @@ func LoaderMiddleware() gin.HandlerFunc {
 	}
 }
 
-func CtxLoaders(ctx context.Context) Loaders {
-	return ctx.Value(ctxKey).(Loaders)
-}
-
-func GinContextFromContextLoaders(ctx context.Context) (Loaders, error) {
-	ginContext := ctx.Value(ctxKey)
-	if ginContext == nil {
+func CtxLoaders(ctx context.Context) (Loaders, error) {
+	gCtx := ctx.Value(ctxKey)
+	if gCtx == nil {
 		err := fmt.Errorf("could not retrieve gin.Context")
 		return Loaders{}, err
 	}
-	ldr := ginContext.(Loaders)
+	ldr := gCtx.(Loaders)
 	return ldr, nil
 }

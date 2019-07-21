@@ -38,7 +38,7 @@ func (r *mutationResolver) AddTask(ctx context.Context, input generated.TaskInpu
 type queryResolver struct{ *Resolver }
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) {
-	ldr, err := dataloader.GinContextFromContextLoaders(ctx)
+	ldr, err := dataloader.CtxLoaders(ctx)
 	if err != nil{
 		panic(err)
 	}
