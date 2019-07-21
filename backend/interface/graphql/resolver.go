@@ -6,6 +6,7 @@ import (
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
+	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
 )
 
 // THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.
@@ -37,11 +38,13 @@ func (r *mutationResolver) AddTask(ctx context.Context, input generated.TaskInpu
 type queryResolver struct{ *Resolver }
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) {
-	db := database.NewDB()
-	user := &model.User{}
-	err := db.First(user, "id = ?", id).Error
+	ldr, err := dataloader.GinContextFromContextLoaders(ctx)
+	if err != nil{
+		panic(err)
+	}
+	user, err := ldr.UserById.Load(*id)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	u := graph.NewUser(user)
 	return u, nil

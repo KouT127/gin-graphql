@@ -4,6 +4,7 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/interface/graphql"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
+	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/security"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -21,6 +22,7 @@ func NewRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	r.Use(security.CORSMiddleware())
+	r.Use(dataloader.LoaderMiddleware())
 
 	r.POST("/query", graphqlHandler())
 	r.GET("/", playgroundHandler())
