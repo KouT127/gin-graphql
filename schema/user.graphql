@@ -8,6 +8,14 @@ type Users {
     ): UserConnection!
 
     user(id: ID): User!
+
+    tasks(
+        first: Int,
+        after: String,
+        last: Int,
+        before: String,
+        query: String
+    ):TaskConnection
 }
 
 type UserConnection implements Connection{

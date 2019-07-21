@@ -89,4 +89,5 @@ type UserInput struct {
 type Users struct {
 	Users *UserConnection `json:"users"`
 	User  *User           `json:"user"`
+	Tasks *TaskConnection `json:"tasks"`
 }

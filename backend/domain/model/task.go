@@ -8,5 +8,3 @@ type Task struct {
 	Title       string `gorm:"title"`
 	Description string `gorm:"description"`
 }
-
-func (Task) IsNode() {}
