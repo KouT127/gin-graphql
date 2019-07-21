@@ -1,5 +1,5 @@
 type Query {
-    user(id: ID): User
+    user(id: Int): User
     tasks(
         first: Int,
         after: String,

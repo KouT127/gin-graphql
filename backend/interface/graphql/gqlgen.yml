@@ -8,10 +8,10 @@ schema:
 exec:
   filename: generated/exec.go
 model:
-  filename: graph/generated_model.go
+  filename: generated/generated_model.go
 
 autobind:
-  - github.com/KouT127/gin-sample/backend/domain/model
+  - github.com/KouT127/gin-sample/backend/interface/graphql/graph
 #models:
 #  User:
 #    model: github.com/KouT127/gin-sample/backend/domain/model.User
