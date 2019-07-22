@@ -35,7 +35,6 @@ func LoaderMiddleware() gin.HandlerFunc {
 				}
 				errors = make([]error, len(keys))
 				db := database.NewDB()
-				print("keys:" + strings.Join(keySql, ","))
 				time.Sleep(5 * time.Millisecond)
 				query := db.Table("users").Where("id in (?)", strings.Join(keySql, ","))
 				rows, err := query.Rows()
@@ -61,24 +60,32 @@ func LoaderMiddleware() gin.HandlerFunc {
 		ldrs.TaskByUser = &TaskSliceLoader{
 			wait:     wait,
 			maxBatch: 100,
-			fetch: func(keys []int) ([][]*model.Task, []error) {
-				//var keySql []string
-				//for _, key := range keys {
-				//	keySql = append(keySql, strconv.Itoa(key))
-				//}
-				//
-				//fmt.Printf("SELECT * FROM orders WHERE customer_id IN (%s)\n", strings.Join(keySql, ","))
-				//time.Sleep(5 * time.Millisecond)
-				//
-				//tasks := make([][]*Task, len(keys))
-				//errors := make([]error, len(keys))
-				//for i, key := range keys {
-				//	print(key)
-				//	tasks[i] = []*Task{}
-				//}
-				//
-				//return tasks, errors
-				return nil, nil
+			fetch: func(keys []int) (tasks [][]*model.Task, errors []error) {
+				var keySql []string
+				for _, key := range keys {
+					keySql = append(keySql, strconv.Itoa(key))
+				}
+				errors = make([]error, len(keys))
+				tasks = make([][]*model.Task, len(keys))
+				db := database.NewDB()
+				time.Sleep(5 * time.Millisecond)
+
+				var ts []model.Task
+				query := db.Table("tasks").Where("user_refer in (?)", strings.Join(keySql, ",")).Scan(&ts)
+				_, err := query.Rows()
+				if err != nil {
+					tasks = append(tasks, []*model.Task{})
+					errors = append(errors, err)
+					return tasks, errors
+				}
+				for i, key := range keys {
+					for _, task := range ts {
+						if int(task.UserRefer) == key {
+							tasks[i] = append(tasks[i], &task)
+						}
+					}
+				}
+				return tasks, errors
 			},
 		}
 		ctx := context.WithValue(c.Request.Context(), ctxKey, ldrs)

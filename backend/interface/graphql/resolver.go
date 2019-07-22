@@ -39,7 +39,7 @@ type queryResolver struct{ *Resolver }
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) {
 	ldr, err := dataloader.CtxLoaders(ctx)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	user, err := ldr.UserById.Load(*id)
@@ -91,5 +91,24 @@ func (r *userResolver) ID(ctx context.Context, obj *graph.User) (string, error) 
 	return obj.ID, nil
 }
 func (r *userResolver) Tasks(ctx context.Context, obj *graph.User, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
+	//db := database.NewDB()
+	//var cnt int
+	//err := db.Model(&model.Task{}).Count(&cnt).Error
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//ldr, err := dataloader.CtxLoaders(ctx)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//id, err := strconv.Atoi(obj.ID)
+	//var edges []*graph.TaskEdge
+	//tasks, _ := ldr.TaskByUser.Load(id)
+	//for _, t := range tasks {
+	//	edge := graph.NewTaskEdge(t)
+	//	edges = append(edges, edge)
+	//}
+	//conn := graph.NewTaskConnection(cnt, edges)
 	return r.Query().Tasks(ctx, first, after, last, before, query)
 }
