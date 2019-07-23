@@ -92,23 +92,18 @@ func (r *userResolver) ID(ctx context.Context, obj *graph.User) (string, error) 
 	return obj.ID, nil
 }
 func (r *userResolver) Tasks(ctx context.Context, obj *graph.User, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
-	db := database.NewDB()
-	var cnt int
-	err := db.Model(&model.Task{}).Count(&cnt).Error
-	if err != nil {
-		panic(err)
-	}
 	ldr, err := dataloader.CtxLoaders(ctx)
 	if err != nil {
 		panic(err)
 	}
 	var edges []*graph.TaskEdge
 	id, _ := strconv.Atoi(obj.ID)
+	cnt, _ := ldr.TaskCountByUser.Load(id)
 	tasks, err := ldr.TaskByUser.Load(id)
 	for _, t := range tasks {
 		edge := graph.NewTaskEdge(t)
 		edges = append(edges, edge)
 	}
-	conn := graph.NewTaskConnection(cnt, edges)
+	conn := graph.NewTaskConnection(*cnt, edges)
 	return conn, nil
 }

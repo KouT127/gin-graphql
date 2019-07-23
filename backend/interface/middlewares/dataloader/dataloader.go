@@ -16,8 +16,9 @@ type ctxKeyType struct{ name string }
 var ctxKey = ctxKeyType{"appCtx"}
 
 type Loaders struct {
-	UserById   *UserLoader
-	TaskByUser *TaskSliceLoader
+	UserById        *UserLoader
+	TaskCountByUser *TaskCountLoader
+	TaskByUser      *TaskSliceLoader
 }
 
 func LoaderMiddleware() gin.HandlerFunc {
@@ -29,21 +30,20 @@ func LoaderMiddleware() gin.HandlerFunc {
 			maxBatch: 100,
 			fetch: func(keys []int) (users []*model.User, errors []error) {
 				var keySql []string
+				users = make([]*model.User, len(keys))
+				errors = make([]error, len(keys))
 				idx := 0
 				for _, key := range keys {
 					keySql = append(keySql, strconv.Itoa(key))
 				}
-				errors = make([]error, len(keys))
 				db := database.NewDB()
 				time.Sleep(5 * time.Millisecond)
 				query := db.Table("users").Where("id in (?)", strings.Join(keySql, ","))
 				rows, err := query.Rows()
 				if err != nil {
-					users = append(users, &model.User{})
 					errors = append(errors, err)
 					return users, errors
 				}
-				users = make([]*model.User, len(keys))
 				for i, _ := range keys {
 					rows.Next()
 					u := &model.User{}
@@ -55,6 +55,23 @@ func LoaderMiddleware() gin.HandlerFunc {
 					idx += 1
 				}
 				return users, errors
+			},
+		}
+		ldrs.TaskCountByUser = &TaskCountLoader{
+			wait:     wait,
+			maxBatch: 100,
+			fetch: func(keys []int) (ints []*int, errors []error) {
+				var cnt int
+				ints = make([]*int, len(keys))
+				db := database.NewDB()
+				err := db.Model(&model.Task{}).Count(&cnt).Error
+				if err != nil {
+					panic(err)
+				}
+				for i, _ := range keys {
+					ints[i] = &cnt
+				}
+				return ints, nil
 			},
 		}
 		ldrs.TaskByUser = &TaskSliceLoader{
@@ -69,10 +86,10 @@ func LoaderMiddleware() gin.HandlerFunc {
 				for _, key := range keys {
 					keySql = append(keySql, strconv.Itoa(key))
 				}
-				query := db.Table("tasks").Where("user_refer in (?)", strings.Join(keySql, ","))
+				query := db.Table("tasks").
+					Where("user_refer in (?)", strings.Join(keySql, ","))
 				rows, err := query.Rows()
 				if err != nil {
-					tasks = append(tasks, []*model.Task{})
 					errors = append(errors, err)
 					return tasks, errors
 				}
@@ -83,7 +100,6 @@ func LoaderMiddleware() gin.HandlerFunc {
 						if err != nil {
 							panic(err)
 						}
-						print(t.Title)
 						if int(t.UserRefer) == key {
 							tasks[i] = append(tasks[i], t)
 						}
