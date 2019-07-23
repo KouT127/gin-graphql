@@ -62,26 +62,30 @@ func LoaderMiddleware() gin.HandlerFunc {
 			maxBatch: 100,
 			fetch: func(keys []int) (tasks [][]*model.Task, errors []error) {
 				var keySql []string
+				tasks = make([][]*model.Task, len(keys))
+				errors = make([]error, len(keys))
+				db := database.NewDB()
+				time.Sleep(5 * time.Millisecond)
 				for _, key := range keys {
 					keySql = append(keySql, strconv.Itoa(key))
 				}
-				errors = make([]error, len(keys))
-				tasks = make([][]*model.Task, len(keys))
-				db := database.NewDB()
-				time.Sleep(5 * time.Millisecond)
-
-				var ts []model.Task
-				query := db.Table("tasks").Where("user_refer in (?)", strings.Join(keySql, ",")).Scan(&ts)
-				_, err := query.Rows()
+				query := db.Table("tasks").Where("user_refer in (?)", strings.Join(keySql, ","))
+				rows, err := query.Rows()
 				if err != nil {
 					tasks = append(tasks, []*model.Task{})
 					errors = append(errors, err)
 					return tasks, errors
 				}
 				for i, key := range keys {
-					for _, task := range ts {
-						if int(task.UserRefer) == key {
-							tasks[i] = append(tasks[i], &task)
+					for rows.Next() {
+						t := &model.Task{}
+						err := db.ScanRows(rows, t)
+						if err != nil {
+							panic(err)
+						}
+						print(t.Title)
+						if int(t.UserRefer) == key {
+							tasks[i] = append(tasks[i], t)
 						}
 					}
 				}

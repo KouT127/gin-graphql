@@ -7,6 +7,7 @@ import (
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
+	"strconv"
 )
 
 // THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.
@@ -91,24 +92,23 @@ func (r *userResolver) ID(ctx context.Context, obj *graph.User) (string, error) 
 	return obj.ID, nil
 }
 func (r *userResolver) Tasks(ctx context.Context, obj *graph.User, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
-	//db := database.NewDB()
-	//var cnt int
-	//err := db.Model(&model.Task{}).Count(&cnt).Error
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//ldr, err := dataloader.CtxLoaders(ctx)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//id, err := strconv.Atoi(obj.ID)
-	//var edges []*graph.TaskEdge
-	//tasks, _ := ldr.TaskByUser.Load(id)
-	//for _, t := range tasks {
-	//	edge := graph.NewTaskEdge(t)
-	//	edges = append(edges, edge)
-	//}
-	//conn := graph.NewTaskConnection(cnt, edges)
-	return r.Query().Tasks(ctx, first, after, last, before, query)
+	db := database.NewDB()
+	var cnt int
+	err := db.Model(&model.Task{}).Count(&cnt).Error
+	if err != nil {
+		panic(err)
+	}
+	ldr, err := dataloader.CtxLoaders(ctx)
+	if err != nil {
+		panic(err)
+	}
+	var edges []*graph.TaskEdge
+	id, _ := strconv.Atoi(obj.ID)
+	tasks, err := ldr.TaskByUser.Load(id)
+	for _, t := range tasks {
+		edge := graph.NewTaskEdge(t)
+		edges = append(edges, edge)
+	}
+	conn := graph.NewTaskConnection(cnt, edges)
+	return conn, nil
 }
