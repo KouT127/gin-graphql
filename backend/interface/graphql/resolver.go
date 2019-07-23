@@ -7,7 +7,6 @@ import (
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
-	"strconv"
 )
 
 // THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.
@@ -92,18 +91,41 @@ func (r *userResolver) ID(ctx context.Context, obj *graph.User) (string, error) 
 	return obj.ID, nil
 }
 func (r *userResolver) Tasks(ctx context.Context, obj *graph.User, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
-	ldr, err := dataloader.CtxLoaders(ctx)
+	db := database.NewDB()
+	// TODO: replace panic
+	q, err := dataloader.NewQuery(first, after, last, before, query)
 	if err != nil {
 		panic(err)
 	}
+	var cnt int
 	var edges []*graph.TaskEdge
-	id, _ := strconv.Atoi(obj.ID)
-	cnt, _ := ldr.TaskCountByUser.Load(id)
-	tasks, err := ldr.TaskByUser.Load(id)
-	for _, t := range tasks {
-		edge := graph.NewTaskEdge(t)
+	qs := db.Model(&model.Task{})
+	if q.First != nil {
+		qs = qs.Limit(first).Offset(q.After)
+	}
+	if q.Last != nil {
+		qs = qs.Limit(last).Offset(q.Before)
+	}
+	if q.Keyword != nil {
+		qs = qs.Where("description like ?", q.Keyword)
+	}
+	err = qs.Count(&cnt).Error
+	if err != nil {
+		panic(err)
+	}
+	rows, err := db.Model(&model.Task{}).Where("limit ").Rows()
+	if err != nil {
+		panic(err)
+	}
+	for rows.Next() {
+		task := &model.Task{}
+		err := db.ScanRows(rows, task)
+		if err != nil {
+			panic(err)
+		}
+		edge := graph.NewTaskEdge(task)
 		edges = append(edges, edge)
 	}
-	conn := graph.NewTaskConnection(*cnt, edges)
+	conn := graph.NewTaskConnection(cnt, edges)
 	return conn, nil
 }
