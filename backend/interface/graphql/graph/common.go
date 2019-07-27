@@ -1,6 +1,6 @@
 package graph
 
-const CursorKey = "cursor"
+const CursorKey = "cursor:"
 
 type PageInfo struct {
 	StartCursor     string

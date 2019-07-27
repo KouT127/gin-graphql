@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-const taskKey = "task"
+const taskKey = "task:"
 
 type TaskConnection struct {
 	TotalCount int
@@ -32,8 +32,8 @@ func (c *TaskConnection) registerConnection(cnt int, es []*TaskEdge) *TaskConnec
 	return c
 }
 
-func (e *TaskEdge) registerEdge(t *Task) *TaskEdge {
-	e.Cursor = util.Base64Encode(CursorKey + t.ID)
+func (e *TaskEdge) registerEdge(m *model.Task, t *Task) *TaskEdge {
+	e.Cursor = util.Base64Encode(CursorKey + strconv.Itoa(int(m.ID)))
 	e.Node = t
 	return e
 }
@@ -60,7 +60,7 @@ func NewTaskEdge(m *model.Task) *TaskEdge {
 	t := &Task{}
 	t.registerTask(m)
 	edge := &TaskEdge{}
-	edge = edge.registerEdge(t)
+	edge = edge.registerEdge(m, t)
 	return edge
 }
 

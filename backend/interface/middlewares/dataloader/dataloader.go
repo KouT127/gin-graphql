@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo"
 	"strconv"
 	"strings"
 	"time"
@@ -21,8 +21,9 @@ type Loaders struct {
 	TaskByUser      *TaskSliceLoader
 }
 
-func LoaderMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
+func LoaderMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+
+	return func(c echo.Context) error {
 		ldrs := Loaders{}
 		wait := 250 * time.Microsecond
 		ldrs.UserById = &UserLoader{
@@ -108,9 +109,12 @@ func LoaderMiddleware() gin.HandlerFunc {
 				return tasks, errors
 			},
 		}
-		ctx := context.WithValue(c.Request.Context(), ctxKey, ldrs)
-		c.Request = c.Request.WithContext(ctx)
-		c.Next()
+
+		request := c.Request()
+		ctx := context.WithValue(request.Context(), ctxKey, ldrs)
+		c.SetRequest(request.WithContext(ctx))
+		err := next(c)
+		return err
 	}
 }
 
