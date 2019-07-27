@@ -6,17 +6,9 @@ import (
 	"github.com/KouT127/gin-sample/backend/interface/graphql"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
-	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
-
-var db *gorm.DB
-
-//func Init() {
-//	r := NewRouter()
-//	r.Run()
-//}
 
 func Init() {
 	e := NewRouter()
