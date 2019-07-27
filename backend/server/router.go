@@ -2,24 +2,25 @@ package server
 
 import (
 	"github.com/99designs/gqlgen/handler"
-	. "github.com/KouT127/gin-sample/backend/config"
+	"github.com/KouT127/gin-sample/backend/config"
 	"github.com/KouT127/gin-sample/backend/interface/graphql"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func Init() {
 	e := NewRouter()
-	e.Start(":8080")
+	e.Logger.Fatal(e.Start(":8080"))
 }
 
 func NewRouter() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Recover())
-	e.Use(middleware.LoggerWithConfig(DebugLoggerConfig))
-	e.Use(dataloader.LoaderMiddleware)
+	e.Use(middleware.LoggerWithConfig(config.DebugLoggerConfig))
+	e.Use(middleware.CORS())
+	e.Use(dataloader.LoaderMiddleware())
 	e.POST("/query", graphqlHandler())
 	e.GET("/", playgroundHandler())
 	return e
