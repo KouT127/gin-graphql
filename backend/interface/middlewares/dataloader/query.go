@@ -2,7 +2,8 @@ package dataloader
 
 import (
 	"errors"
-	. "github.com/KouT127/gin-sample/backend/interface/graphql/graph"
+	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
+	"github.com/KouT127/gin-sample/backend/util"
 	"strconv"
 	"strings"
 )
@@ -16,7 +17,8 @@ type Query struct {
 }
 
 func ParseString(v string) int {
-	s := strings.Replace(v, CursorKey, "", 1)
+	s, _ := util.Base64Decode(v)
+	s = strings.Replace(s, graph.CursorKey, "", 1)
 	i, _ := strconv.Atoi(s)
 	return i
 }
@@ -40,7 +42,7 @@ func NewQuery(first *int, after *string, last *int, before *string, keyword *str
 	if before != nil {
 		bf = ParseString(*before)
 	}
-	if keyword != nil{
+	if keyword != nil {
 		kw = *keyword
 	}
 	q := &Query{
