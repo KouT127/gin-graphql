@@ -24,7 +24,6 @@ func ParseString(v string) int {
 }
 
 func NewQuery(first *int, after *string, last *int, before *string, keyword *string) (*Query, error) {
-
 	var f, l, af, bf int
 	var kw string
 	if first == nil && last == nil {

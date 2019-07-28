@@ -3,9 +3,9 @@ package server
 import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/config"
-	"github.com/KouT127/gin-sample/backend/interface/graphql"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
+	"github.com/KouT127/gin-sample/backend/interface/resolver"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -27,7 +27,7 @@ func NewRouter() *echo.Echo {
 }
 
 func graphqlHandler() echo.HandlerFunc {
-	return echo.WrapHandler(handler.GraphQL(generated.NewExecutableSchema(generated.Config{Resolvers: &graphql.Resolver{}})))
+	return echo.WrapHandler(handler.GraphQL(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{}})))
 }
 func playgroundHandler() echo.HandlerFunc {
 	return echo.WrapHandler(handler.Playground("GraphQL", "/query"))
