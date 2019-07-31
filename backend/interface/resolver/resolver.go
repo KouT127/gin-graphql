@@ -53,7 +53,7 @@ func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) 
 
 func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
 	db := database.NewDB()
-	var cnt int
+	var cnt, offset int
 	var edges []*graph.TaskEdge
 	err := db.Model(&model.Task{}).Count(&cnt).Error
 	if err != nil {
@@ -69,7 +69,7 @@ func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, la
 		if err != nil {
 			panic(err)
 		}
-		edge := graph.NewTaskEdge(task)
+		edge := graph.NewTaskEdge(task, offset)
 		edges = append(edges, edge)
 	}
 	conn := graph.NewTaskConnection(cnt, edges)

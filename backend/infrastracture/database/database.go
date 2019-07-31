@@ -16,7 +16,7 @@ func Init() {
 	USER := "root"
 	PASS := ""
 	PROTOCOL := "tcp(localhost:3306)"
-	DBNAME := "go_tutorial"
+	DBNAME := "go_graph"
 	OPTION := "charset=utf8&parseTime=true"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + OPTION

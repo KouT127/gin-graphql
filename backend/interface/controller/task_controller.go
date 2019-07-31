@@ -10,7 +10,7 @@ import (
 
 func TaskController(q *dataloader.Query) (*TaskConnection, error) {
 	var scopes []func(db *DB) *DB
-	var cnt int
+	var cnt, idx int
 	var edges []*TaskEdge
 	var err error
 	db := database.NewDB()
@@ -27,15 +27,15 @@ func TaskController(q *dataloader.Query) (*TaskConnection, error) {
 		scopes = append(scopes, OrderBySort("id DESC"))
 	}
 	if q.After != 0 {
-		scopes = append(scopes, ByOffset(q.After))
+		idx += q.After
 	}
 	if q.Before != 0 {
-		
-		scopes = append(scopes, ByOffset(q.Before))
+		idx += q.Before
 	}
 	if q.Keyword != "" {
 		scopes = append(scopes, ByKeyword(q.Keyword))
 	}
+	scopes = append(scopes, ByOffset(idx))
 	rows, err := db.Model(&model.Task{}).Scopes(scopes...).Rows()
 	if err != nil {
 		panic(err)
@@ -46,8 +46,9 @@ func TaskController(q *dataloader.Query) (*TaskConnection, error) {
 		if err != nil {
 			panic(err)
 		}
-		edge := NewTaskEdge(task)
+		edge := NewTaskEdge(task, idx)
 		edges = append(edges, edge)
+		idx++
 	}
 	return NewTaskConnection(cnt, edges), nil
 }

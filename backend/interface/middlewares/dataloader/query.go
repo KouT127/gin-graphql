@@ -20,6 +20,7 @@ func ParseString(v string) int {
 	s, _ := util.Base64Decode(v)
 	s = strings.Replace(s, graph.CursorKey, "", 1)
 	i, _ := strconv.Atoi(s)
+	i++
 	return i
 }
 

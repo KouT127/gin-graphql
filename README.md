@@ -8,6 +8,10 @@ npx create-react-app frontend --typescript
 ```bash
 go generate
 ```
+```bash
+create database go_graph
+```
+
 
 ```
 作成されていない初回のみ

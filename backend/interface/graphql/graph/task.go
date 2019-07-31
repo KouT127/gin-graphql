@@ -32,8 +32,8 @@ func (c *TaskConnection) registerConnection(cnt int, es []*TaskEdge) *TaskConnec
 	return c
 }
 
-func (e *TaskEdge) registerEdge(m *model.Task, t *Task) *TaskEdge {
-	e.Cursor = util.Base64Encode(CursorKey + strconv.Itoa(int(m.ID)))
+func (e *TaskEdge) registerEdge(t *Task, offset int) *TaskEdge {
+	e.Cursor = util.Base64Encode(CursorKey + strconv.Itoa(offset))
 	e.Node = t
 	return e
 }
@@ -56,11 +56,11 @@ func (c *TaskConnection) registerPageInfo(e []*TaskEdge) *PageInfo {
 	return p
 }
 
-func NewTaskEdge(m *model.Task) *TaskEdge {
+func NewTaskEdge(m *model.Task, offset int) *TaskEdge {
 	t := &Task{}
 	t.registerTask(m)
 	edge := &TaskEdge{}
-	edge = edge.registerEdge(m, t)
+	edge = edge.registerEdge(t, offset)
 	return edge
 }
 
