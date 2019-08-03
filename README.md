@@ -15,6 +15,8 @@ create database go_graph
 
 ```
 作成されていない初回のみ
+cd backend/interface/graph
+
 gqlgen init
 
 gqlgen -v

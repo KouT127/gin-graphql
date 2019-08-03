@@ -466,6 +466,7 @@ scalar Time`},
 input UserInput {
     name: String!
     gender: String!
+    tasks: [TaskInput]
 }
 
 type AddUserPayload{
@@ -3112,6 +3113,12 @@ func (ec *executionContext) unmarshalInputUserInput(ctx context.Context, obj int
 			if err != nil {
 				return it, err
 			}
+		case "tasks":
+			var err error
+			it.Tasks, err = ec.unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		}
 	}
 
@@ -4367,6 +4374,38 @@ func (ec *executionContext) marshalOTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋg
 		return graphql.Null
 	}
 	return ec._TaskConnection(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (TaskInput, error) {
+	return ec.unmarshalInputTaskInput(ctx, v)
+}
+
+func (ec *executionContext) unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) ([]*TaskInput, error) {
+	var vSlice []interface{}
+	if v != nil {
+		if tmp1, ok := v.([]interface{}); ok {
+			vSlice = tmp1
+		} else {
+			vSlice = []interface{}{v}
+		}
+	}
+	var err error
+	res := make([]*TaskInput, len(vSlice))
+	for i := range vSlice {
+		res[i], err = ec.unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (*TaskInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
+	return &res, err
 }
 
 func (ec *executionContext) marshalOUser2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v graph.User) graphql.Marshaler {

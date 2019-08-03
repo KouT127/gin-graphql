@@ -8,7 +8,17 @@ import (
 	. "github.com/jinzhu/gorm"
 )
 
-func TaskController(q *dataloader.Query) (*TaskConnection, error) {
+type TaskController interface {
+	AllTasks(q *dataloader.Query) (*TaskConnection, error)
+}
+
+type taskController struct{}
+
+func NewTaskController() *taskController {
+	return &taskController{}
+}
+
+func (taskController) AllTasks(q *dataloader.Query) (*TaskConnection, error) {
 	var scopes []func(db *DB) *DB
 	var cnt, idx int
 	var edges []*TaskEdge

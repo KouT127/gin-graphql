@@ -6,6 +6,7 @@ type Mutation {
 input UserInput {
     name: String!
     gender: String!
+    tasks: [TaskInput]
 }
 
 type AddUserPayload{

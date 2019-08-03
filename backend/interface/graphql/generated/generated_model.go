@@ -35,6 +35,7 @@ type TaskInput struct {
 }
 
 type UserInput struct {
-	Name   string `json:"name"`
-	Gender string `json:"gender"`
+	Name   string       `json:"name"`
+	Gender string       `json:"gender"`
+	Tasks  []*TaskInput `json:"tasks"`
 }

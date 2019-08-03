@@ -30,7 +30,39 @@ func (r *Resolver) User() generated.UserResolver {
 type mutationResolver struct{ *Resolver }
 
 func (r *mutationResolver) AddUser(ctx context.Context, user generated.UserInput) (*generated.AddUserPayload, error) {
-	panic("not implemented")
+	db := database.NewDB()
+	u := model.User{
+		Name:     user.Name,
+		BirthDay: "",
+		Gender:   user.Gender,
+		PhotoURL: "",
+		Active:   false,
+	}
+	db.Save(&u)
+
+	for _, task := range user.Tasks {
+		t := model.Task{
+			UserRefer:   u.ID,
+			Title:       task.Title,
+			Description: task.Description,
+		}
+		db.Save(&t)
+	}
+
+	a := "1"
+	re := graph.User{
+		ID:       "",
+		Name:     "",
+		BirthDay: "",
+		Gender:   "",
+		PhotoURL: "",
+		Active:   false,
+	}
+	payload := generated.AddUserPayload{
+		ClientMutationID: &a,
+		User:             &re,
+	}
+	return &payload, nil
 }
 func (r *mutationResolver) AddTask(ctx context.Context, input generated.TaskInput) (*generated.AddTaskPayload, error) {
 	panic("not implemented")
@@ -53,7 +85,7 @@ func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) 
 
 func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.TaskConnection, error) {
 	db := database.NewDB()
-	var cnt, offset int
+	var cnt, idx int
 	var edges []*graph.TaskEdge
 	err := db.Model(&model.Task{}).Count(&cnt).Error
 	if err != nil {
@@ -69,8 +101,9 @@ func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, la
 		if err != nil {
 			panic(err)
 		}
-		edge := graph.NewTaskEdge(task, offset)
+		edge := graph.NewTaskEdge(task, idx)
 		edges = append(edges, edge)
+		idx++
 	}
 	conn := graph.NewTaskConnection(cnt, edges)
 	return conn, nil
@@ -96,8 +129,9 @@ func (r *userResolver) Tasks(ctx context.Context, obj *graph.User, first *int, a
 	if err != nil {
 		panic(err)
 	}
-	conn, err := controller.TaskController(q)
-	if err != nil{
+	tc := controller.NewTaskController()
+	conn, err := tc.AllTasks(q)
+	if err != nil {
 		panic(err)
 	}
 	return conn, nil
