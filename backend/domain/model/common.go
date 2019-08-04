@@ -55,3 +55,4 @@ func NewQuery(first *int, after *string, last *int, before *string, keyword *str
 	}
 	return q, nil
 }
+

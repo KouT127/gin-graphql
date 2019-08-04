@@ -2,6 +2,7 @@ package resolver
 
 import (
 	"context"
+	"github.com/KouT127/gin-sample/backend/application/usecase"
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/interface/controller"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
@@ -60,8 +61,8 @@ func (r *queryResolver) Tasks(ctx context.Context, first *int, after *string, la
 	if err != nil {
 		return &graph.TaskConnection{}, err
 	}
-	tc := controller.NewTaskController()
-	conn, err := tc.AllTasks(q, nil)
+	tu := usecase.NewTaskUsecase()
+	conn, err := tu.AllTasks(q, nil)
 	if err != nil {
 		return conn, err
 	}
