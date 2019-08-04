@@ -12,11 +12,6 @@ model:
 
 autobind:
   - github.com/KouT127/gin-sample/backend/interface/graphql/graph
-#models:
-#  User:
-#    model: github.com/KouT127/gin-sample/backend/domain/model.User
-#  Task:
-#    model: github.com/KouT127/gin-sample/backend/domain/model.Task
 resolver:
   filename: resolver.go
   type: Resolver
