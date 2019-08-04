@@ -33,7 +33,7 @@ func (c *TaskConnection) registerConnection(cnt int, es []*TaskEdge) *TaskConnec
 }
 
 func (e *TaskEdge) registerEdge(t *Task, offset int) *TaskEdge {
-	e.Cursor = util.Base64Encode(CursorKey + strconv.Itoa(offset))
+	e.Cursor = util.Base64Encode(model.CursorKey + strconv.Itoa(offset))
 	e.Node = t
 	return e
 }

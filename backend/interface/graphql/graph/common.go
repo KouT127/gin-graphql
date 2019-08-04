@@ -1,6 +1,6 @@
 package graph
 
-const CursorKey = "cursor:"
+
 
 type PageInfo struct {
 	StartCursor     string
@@ -8,4 +8,3 @@ type PageInfo struct {
 	HasNextPage     bool
 	HasPreviousPage bool
 }
-
