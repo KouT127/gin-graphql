@@ -36,3 +36,9 @@ go run github.com/vektah/dataloaden TaskCountLoader int *github.com/KouT127/gin-
 1-m m-m
 go run github.com/vektah/dataloaden TaskSliceLoader int []*github.com/KouT127/gin-sample/backend/domain/model.Task
 ```
+
+# migration
+```bash
+cd backend
+migrate -source file://infrastracture/database/migration/  -database 'mysql://root:@tcp(localhost:3306)/go_graph' up 1
+```

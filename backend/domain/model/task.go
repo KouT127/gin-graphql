@@ -1,10 +1,15 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 type Task struct {
-	gorm.Model
-	UserRefer   uint
-	Title       string `gorm:"title"`
-	Description string `gorm:"description"`
+	ID          int
+	UserRefer   int
+	Title       string
+	Description string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   *time.Time
 }

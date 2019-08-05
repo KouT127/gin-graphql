@@ -20,7 +20,7 @@ type TaskEdge struct {
 
 type Task struct {
 	ID          string
-	UserRefer   uint
+	UserRefer   int
 	Title       string
 	Description string
 }

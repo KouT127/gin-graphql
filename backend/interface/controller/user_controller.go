@@ -22,9 +22,9 @@ func NewUserController() *userController {
 func (uc *userController) AddTask(user *generated.UserInput) (*generated.AddUserPayload, error) {
 	db := database.NewDB()
 	u := model.User{
-		Name:     user.Name,
-		Gender:   user.Gender,
-		Active:   true,
+		Name:   user.Name,
+		Gender: user.Gender,
+		Active: true,
 	}
 	db.Save(&u)
 	for _, task := range user.Tasks {
@@ -32,6 +32,7 @@ func (uc *userController) AddTask(user *generated.UserInput) (*generated.AddUser
 			UserRefer:   u.ID,
 			Title:       task.Title,
 			Description: task.Description,
+			DeletedAt:   nil,
 		}
 		db.Save(&t)
 	}
