@@ -18,15 +18,15 @@ type config struct {
 	}
 }
 
-type Environment int
+type environment int
 
 const (
-	Development Environment = iota
+	Development environment = iota
 	Staging
 	Production
 )
 
-func (e Environment) path() string {
+func (e environment) path() string {
 	switch e {
 	case Staging:
 		return "./backend/config/staging"
@@ -39,7 +39,7 @@ func (e Environment) path() string {
 
 var c config
 
-func Init(e Environment) {
+func Init(e environment) {
 	viper.AddConfigPath(e.path())
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
