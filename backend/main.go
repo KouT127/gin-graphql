@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	config.Init()
+	config.Init(config.Development)
 	database.Init()
 	server.Init()
 }
