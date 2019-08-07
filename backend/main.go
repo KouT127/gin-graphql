@@ -8,6 +8,7 @@ import (
 
 func main() {
 	config.Init(config.Development)
-	database.Init()
+	c := config.NewConfig()
+	database.Init(c)
 	server.Init()
 }

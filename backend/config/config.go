@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-type config struct {
+type Config struct {
 	Database struct {
 		Dbms   string
 		User   string
@@ -37,7 +37,7 @@ func (e environment) path() string {
 	}
 }
 
-var c config
+var c Config
 
 func Init(e environment) {
 	viper.AddConfigPath(e.path())
@@ -58,6 +58,6 @@ func Init(e environment) {
 	}
 }
 
-func NewConfig() *config {
+func NewConfig() *Config {
 	return &c
 }
