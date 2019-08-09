@@ -2,7 +2,6 @@ package database
 
 import (
 	"github.com/KouT127/gin-sample/backend/config"
-	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -26,12 +25,6 @@ func Init(c *config.Config) {
 		panic(err)
 	}
 	db.LogMode(true)
-	autoMigration()
-}
-
-func autoMigration() {
-	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Task{})
 }
 
 func NewDB() *gorm.DB {
