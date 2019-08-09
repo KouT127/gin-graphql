@@ -13,3 +13,6 @@
 
 .idea
 backend/pkg/mod/*
+
+# project config
+backend/config/development/*.json

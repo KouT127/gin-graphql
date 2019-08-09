@@ -4,12 +4,11 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/config"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
-	Authenticaiton "github.com/KouT127/gin-sample/backend/interface/middlewares/authentication"
+	"github.com/KouT127/gin-sample/backend/interface/middlewares/authorization"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
 	"github.com/KouT127/gin-sample/backend/interface/resolver"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"net/http"
 )
 
 func Init() {
@@ -18,21 +17,21 @@ func Init() {
 }
 
 func NewRouter() *echo.Echo {
-
 	e := echo.New()
 	c := complexityHandler()
 	e.Use(middleware.Recover())
 	e.Use(middleware.LoggerWithConfig(config.DebugLoggerConfig))
-	e.Use(Authenticaiton.FirebaseAuth())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{""},
-		AllowMethods: []string{http.MethodGet, http.MethodPost},
-		AllowHeaders: []string{"Content-Type"},
-	}))
-
-	e.Use(dataloader.LoaderMiddleware())
-	e.POST("/query", graphqlHandler(c))
+	//e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	//	AllowOrigins: []string{""},
+	//	AllowMethods: []string{http.MethodGet, http.MethodPost},
+	//	AllowHeaders: []string{"Content-Type"},
+	//}))
 	e.GET("/", playgroundHandler())
+	graph := e.Group("/query", authorization.FirebaseAuth())
+	{
+		graph.Use(dataloader.LoaderMiddleware())
+		graph.POST("", graphqlHandler(c))
+	}
 	return e
 }
 
@@ -53,7 +52,7 @@ func complexityHandler() *generated.Config {
 func graphqlHandler(c *generated.Config) echo.HandlerFunc {
 	return echo.WrapHandler(handler.GraphQL(
 		generated.NewExecutableSchema(*c),
-		handler.ComplexityLimit(5),
+		handler.ComplexityLimit(1000),
 	))
 }
 func playgroundHandler() echo.HandlerFunc {
