@@ -3,16 +3,16 @@ import thunk from "redux-thunk";
 import {userActionCreator, UserState, userStateReducer} from "../reducers/userReducer";
 
 export type AppState = {
-    users: UserState
+    userState: UserState
 }
 
 export const store = createStore(
     combineReducers<AppState>({
-        users: userStateReducer
+        userState: userStateReducer
     }),
     applyMiddleware(thunk)
 );
 
 export const actionCreator = {
-    users: userActionCreator
+    userActions: userActionCreator
 };
