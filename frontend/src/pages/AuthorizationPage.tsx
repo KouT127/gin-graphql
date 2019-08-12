@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../store/store";
-import {authorizeUserPayload, connectAuth, signIn} from "../reducers/userReducer";
+import {authorizeUserPayload, signIn} from "../reducers/userReducer";
 import {Button, Card, CardContent, makeStyles, TextField} from "@material-ui/core";
 
 const userSelector = (state: AppState) => state.userState;
@@ -30,10 +30,6 @@ const AuthorizationPage: React.FC = () => {
     const userState = useSelector(userSelector);
     const [inputState, setInputState] = useState<AuthState>({email: "", password: ""});
 
-    useEffect(() => {
-        dispatch(connectAuth());
-    }, [dispatch]);
-
     const handleChange = (prop: keyof AuthState) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputState({...inputState, [prop]: event.target.value});
     };
@@ -52,6 +48,7 @@ const AuthorizationPage: React.FC = () => {
                 <CardContent className={classes.cardContent}>
                     <TextField id='email'
                                label='Email'
+                               value={inputState.email}
                                onChange={handleChange('email')}
                     />
                     <TextField id='password'
