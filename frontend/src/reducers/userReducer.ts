@@ -1,18 +1,22 @@
 import {Action, AnyAction, Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {AppState} from "../store/store";
-import axios from 'axios';
+import * as firebase from "../config/firebase";
 
 export interface UserState {
-    users: Array<string>,
+    user: any,
 }
 
 const initialUserState: UserState = {
-    users: []
+    user: null
 };
 
+export type authorizeUserPayload = {
+    email: string,
+    password: string,
+}
 export type loadedUserPayload = {
-    users: Array<string>
+    user: any
 }
 
 export interface LoadedUserAction extends Action {
@@ -30,8 +34,8 @@ export const loadedUser = (payload: loadedUserPayload): LoadedUserAction => {
 export const userStateReducer = (state: UserState = initialUserState, action: LoadedUserAction) => {
     switch (action.type) {
         case "LOADED_USERS": {
-            const users = action.payload.users;
-            return {...state, users};
+            const user = action.payload.user;
+            return {...state, user};
         }
         default:
             return state;
@@ -39,16 +43,21 @@ export const userStateReducer = (state: UserState = initialUserState, action: Lo
 };
 
 //Thunk-Actionの定義
-export const loadUser = (payload: void): ThunkAction<void, AppState, any, AnyAction> => (dispatch: Dispatch) => {
-    axios.get("http://localhost:8080/users").then((res) => {
-        const users: [any] = res.data
-        const list = users.map((value) => value.toString())
-        const payload: loadedUserPayload = {users: list}
-        dispatch(loadedUser(payload))
-    })
+export const connectAuth = (payload: void): ThunkAction<void, AppState, any, AnyAction> => (dispatch: Dispatch) => {
+    firebase.default.auth().onAuthStateChanged((user) => {
+            const userPayload: loadedUserPayload = {user: user}
+            dispatch(loadedUser(userPayload))
+        }
+    )
+};
 
+export const signIn = (payload: authorizeUserPayload): ThunkAction<void, AppState, any, AnyAction> => (dispatch: Dispatch) => {
+    firebase.default.auth().signInWithEmailAndPassword(payload.email, payload.password).catch((e) => {
+        console.log(e)
+    })
 };
 
 export const userActionCreator = {
-    loadUser,
+    connectAuth,
+    signIn,
 };
