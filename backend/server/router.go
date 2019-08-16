@@ -9,6 +9,7 @@ import (
 	"github.com/KouT127/gin-sample/backend/interface/resolver"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"net/http"
 )
 
 func Init() {
@@ -21,11 +22,11 @@ func NewRouter() *echo.Echo {
 	c := complexityHandler()
 	e.Use(middleware.Recover())
 	e.Use(middleware.LoggerWithConfig(config.DebugLoggerConfig))
-	//e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-	//	AllowOrigins: []string{""},
-	//	AllowMethods: []string{http.MethodGet, http.MethodPost},
-	//	AllowHeaders: []string{"Content-Type"},
-	//}))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:64102"},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodOptions},
+		AllowHeaders: []string{"authorization","Content-Type"},
+	}))
 	e.GET("/", playgroundHandler())
 	graph := e.Group("/query", authorization.FirebaseAuth())
 	{
