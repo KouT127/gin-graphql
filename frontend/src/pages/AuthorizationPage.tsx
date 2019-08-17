@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppState} from "../store/store";
-import {authorizeUserPayload, signIn} from "../reducers/userReducer";
 import {Button, Card, CardContent, makeStyles, TextField} from "@material-ui/core";
 import useReactRouter from 'use-react-router';
-import Routes from "../app/routes";
-
-const userSelector = (state: AppState) => state.userState;
+import {useUserState} from "../components/Providers/UserProvider";
 
 const useStyles = makeStyles({
     card: {
@@ -46,29 +41,27 @@ interface AuthState {
 const AuthorizationPage: React.FC = () => {
     const classes = useStyles();
     const {history} = useReactRouter();
-    const dispatch = useDispatch();
-    const userState = useSelector(userSelector);
+    const {userState, authConnect, signIn} = useUserState();
     const [inputState, setInputState] = useState<AuthState>({email: "", password: ""});
 
     useEffect(() => {
-        if (userState.user == null) {
+        authConnect()
+    }, []);
+
+    useEffect(() => {
+        if (!userState || !userState.user) {
             return
         }
-        history.push(Routes.top())
-    }, [userState]);
+        // history.push(Routes.top())
+    }, [history, userState]);
 
     const handleChange = (prop: keyof AuthState) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputState({...inputState, [prop]: event.target.value});
     };
 
     const handleSubmit = () => {
-        const payload: authorizeUserPayload = {
-            email: inputState.email,
-            password: inputState.password
-        };
-        dispatch(signIn(payload))
+        signIn(inputState.email, inputState.password)
     };
-
 
     return (
         <div className={classes.auth}>
@@ -97,12 +90,12 @@ const AuthorizationPage: React.FC = () => {
                 </Card>
                 <Card className={classes.card}>
                     <CardContent>
-                        {userState.user === null ? (
+                        {userState === null ? (
                             <p>No User</p>
                         ) : (
                             <>
-                                <p>{userState.user.id}</p>
-                                <p>{userState.user.email}</p>
+                                <p>{!userState.user ? '' : userState.user.id}</p>
+                                <p>{!userState.user ? '' : userState.user.email}</p>
                             </>
                         )}
                     </CardContent>
