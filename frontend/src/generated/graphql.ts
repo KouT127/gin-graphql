@@ -144,10 +144,13 @@ export type UserInput = {
   gender: Scalars['String'],
   tasks?: Maybe<Array<Maybe<TaskInput>>>,
 };
-export type GetTaskQueryVariables = {};
+export type GetTasksQueryVariables = {
+  first?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>
+};
 
 
-export type GetTaskQuery = (
+export type GetTasksQuery = (
   { __typename?: 'Query' }
   & { tasks: (
     { __typename?: 'TaskConnection' }
@@ -166,9 +169,9 @@ export type GetTaskQuery = (
   ) }
 );
 
-export const GetTaskDocument = gql`
-    query GetTask {
-  tasks(first: 10) {
+export const GetTasksDocument = gql`
+    query GetTasks($first: Int, $after: String) {
+  tasks(first: $first, after: $after) {
     totalCount
     edges {
       node {
@@ -184,12 +187,12 @@ export const GetTaskDocument = gql`
 }
     `;
 
-    export function useGetTaskQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTaskQuery, GetTaskQueryVariables>) {
-      return ApolloReactHooks.useQuery<GetTaskQuery, GetTaskQueryVariables>(GetTaskDocument, baseOptions);
+    export function useGetTasksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTasksQuery, GetTasksQueryVariables>) {
+      return ApolloReactHooks.useQuery<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument, baseOptions);
     };
-      export function useGetTaskLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTaskQuery, GetTaskQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<GetTaskQuery, GetTaskQueryVariables>(GetTaskDocument, baseOptions);
+      export function useGetTasksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTasksQuery, GetTasksQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument, baseOptions);
       };
       
-export type GetTaskQueryHookResult = ReturnType<typeof useGetTaskQuery>;
-export type GetTaskQueryResult = ApolloReactCommon.QueryResult<GetTaskQuery, GetTaskQueryVariables>;
+export type GetTasksQueryHookResult = ReturnType<typeof useGetTasksQuery>;
+export type GetTasksQueryResult = ApolloReactCommon.QueryResult<GetTasksQuery, GetTasksQueryVariables>;

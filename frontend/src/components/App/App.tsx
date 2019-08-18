@@ -3,12 +3,14 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import AuthorizationPage from "../../pages/AuthorizationPage";
 import {makeStyles} from "@material-ui/core";
 import TasksPage from "../../pages/TasksPage";
-import {UserProvider, useUserState} from "../Providers/UserProvider";
+import {UserProvider} from "../Providers/UserProvider";
 import MyAppBar from "../MyAppBar";
 import ApolloClient from "apollo-client";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {ApolloProvider} from "@apollo/react-hooks";
 import {createHttpLink} from "apollo-link-http";
+import {useDispatch, useSelector} from "react-redux";
+import {connectAuth, userSelector} from "../../reducers/UserReducer";
 
 const useStyles = makeStyles({
     main: {
@@ -17,25 +19,21 @@ const useStyles = makeStyles({
 });
 
 const App: React.FC = () => {
-    const classes = useStyles();
-
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(connectAuth())
+    }, []);
     return (
         <UserProvider>
-            <Main/>
+            <MainProvider/>
         </UserProvider>
     );
 };
 
-const Main = () => {
+const MainProvider = () => {
     const classes = useStyles();
-    const {userState, isLoggedIn, authConnect} = useUserState();
-
-    useEffect(() => {
-        authConnect()
-    }, []);
-
-
-    const token = userState.user && userState.user.token ? `Bearer ${userState.user.token}` : '';
+    const {user} = useSelector(userSelector);
+    const token = user && user.token ? `Bearer ${user.token}` : '';
     const client = new ApolloClient({
         link: createHttpLink({
             uri: 'http://localhost:8080/query',

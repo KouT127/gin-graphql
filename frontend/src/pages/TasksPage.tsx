@@ -3,6 +3,7 @@ import {
     Card,
     CardContent,
     CardHeader,
+    CircularProgress,
     createStyles,
     makeStyles,
     Table,
@@ -10,13 +11,13 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Theme,
-    Typography
+    Theme
 } from "@material-ui/core";
-import {useGetTaskQuery} from "../generated/graphql";
-import {useUserState} from "../components/Providers/UserProvider";
+import {GetTasksQueryVariables, useGetTasksQuery} from "../generated/graphql";
 import {Redirect} from "react-router";
 import Routes from "../app/routes";
+import {useSelector} from "react-redux";
+import {userSelector} from "../reducers/UserReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -49,10 +50,11 @@ interface Task {
 
 const TasksPage: React.FC = () => {
     const classes = useStyles();
-    const {isLoggedIn} = useUserState();
-    const {data, error, loading} = useGetTaskQuery({fetchPolicy: "cache-and-network"});
-    if (loading) return <Typography>Loading...</Typography>;
-    if (error) return <Typography>Error</Typography>;
+    const userState = useSelector(userSelector);
+    const isLoggedIn = !!userState.user;
+    const variable: GetTasksQueryVariables = {first: 10, after: ""};
+    const {data, error, loading} = useGetTasksQuery({fetchPolicy: "cache-and-network", variables: variable},);
+    if (loading || error) return <CircularProgress/>;
     const tasks = data!.tasks.edges.map((edge) => {
         const node = edge.node;
         const task: Task = {

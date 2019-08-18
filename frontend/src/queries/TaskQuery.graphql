@@ -1,12 +1,12 @@
-query GetTask{
-    tasks(first:10){
+query GetTasks($first: Int, $after: String) {
+    tasks(first: $first, after: $after) {
         totalCount
-        edges{
-            node{
+        edges {
+            node {
                 id
                 title
                 description
-                user{
+                user {
                     name
                 }
             }

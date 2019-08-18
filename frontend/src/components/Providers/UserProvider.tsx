@@ -37,14 +37,19 @@ const useUserState = () => {
     }
     const [userState, setUserState] = context;
 
-    const isLoggedIn = userState && userState.user;
+    const isLoggedIn = () => {
+        if (!userState) return null;
+        if (!userState.user) return false;
+        return true
+    };
 
     const authConnect = () => {
         firebase.default.auth().onAuthStateChanged(async (user: FirebaseType.User | null) => {
+                console.log('Auth');
                 if (!user) {
                     return;
                 }
-                console.log('Auth');
+                console.log('After Auth');
                 const authUser: User = {
                     id: user.uid,
                     name: user.displayName,
@@ -60,7 +65,21 @@ const useUserState = () => {
 
     const signIn = (email: string, password: string) => {
         console.log('In');
-        firebase.default.auth().signInWithEmailAndPassword(email, password).catch((e) => {
+        firebase.default.auth().signInWithEmailAndPassword(email, password).then(async (result: FirebaseType.auth.UserCredential | null) => {
+            const user = result!.user;
+            if (!user) {
+                return;
+            }
+            const authUser: User = {
+                id: user.uid,
+                name: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                token: await user.getIdToken()
+            };
+            const userData: UserState = {user: authUser};
+            setUserState && setUserState(userData)
+        }).catch((e) => {
             console.log(e)
         })
     };

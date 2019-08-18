@@ -2,7 +2,8 @@ import {AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Typography} fr
 import React from "react";
 import Routes from "../app/routes";
 import {Link} from "react-router-dom";
-import {useUserState} from "./Providers/UserProvider";
+import {useDispatch, useSelector} from "react-redux";
+import {signOut, userSelector} from "../reducers/UserReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -14,10 +15,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MyAppBar: React.FC = () => {
     const classes = useStyles();
-    const {isLoggedIn, signOut} = useUserState();
+    const dispatch = useDispatch();
+    const {user} = useSelector(userSelector);
+    const isLoggedIn = !!user
 
     const handleSignOut = () => {
-        signOut();
+        dispatch(signOut())
     };
 
     return (

@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, Card, CardContent, makeStyles, TextField} from "@material-ui/core";
 import useReactRouter from 'use-react-router';
-import {useUserState} from "../components/Providers/UserProvider";
+import {useDispatch, useSelector} from "react-redux";
+import {signIn, userSelector} from "../reducers/UserReducer";
 
 const useStyles = makeStyles({
     card: {
@@ -40,27 +41,17 @@ interface AuthState {
 
 const AuthorizationPage: React.FC = () => {
     const classes = useStyles();
+    const {user} = useSelector(userSelector);
+    const dispatch = useDispatch();
     const {history} = useReactRouter();
-    const {userState, authConnect, signIn} = useUserState();
     const [inputState, setInputState] = useState<AuthState>({email: "", password: ""});
-
-    useEffect(() => {
-        authConnect()
-    }, []);
-
-    useEffect(() => {
-        if (!userState || !userState.user) {
-            return
-        }
-        // history.push(Routes.top())
-    }, [history, userState]);
 
     const handleChange = (prop: keyof AuthState) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputState({...inputState, [prop]: event.target.value});
     };
 
     const handleSubmit = () => {
-        signIn(inputState.email, inputState.password)
+        dispatch(signIn({email: inputState.email, password: inputState.password}))
     };
 
     return (
@@ -90,12 +81,12 @@ const AuthorizationPage: React.FC = () => {
                 </Card>
                 <Card className={classes.card}>
                     <CardContent>
-                        {userState === null ? (
+                        {user === null ? (
                             <p>No User</p>
                         ) : (
                             <>
-                                <p>{!userState.user ? '' : userState.user.id}</p>
-                                <p>{!userState.user ? '' : userState.user.email}</p>
+                                <p>{user.id}</p>
+                                <p>{user.email}</p>
                             </>
                         )}
                     </CardContent>
