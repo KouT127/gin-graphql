@@ -23,9 +23,9 @@ func NewRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 	e.Use(middleware.LoggerWithConfig(config.DebugLoggerConfig))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:64102"},
+		AllowOrigins: []string{"http://localhost:3000"},
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodOptions},
-		AllowHeaders: []string{"authorization","Content-Type"},
+		AllowHeaders: []string{"authorization", "Content-Type"},
 	}))
 	e.GET("/", playgroundHandler())
 	graph := e.Group("/query", authorization.FirebaseAuth())
@@ -53,7 +53,7 @@ func complexityHandler() *generated.Config {
 func graphqlHandler(c *generated.Config) echo.HandlerFunc {
 	return echo.WrapHandler(handler.GraphQL(
 		generated.NewExecutableSchema(*c),
-		handler.ComplexityLimit(1000),
+		handler.ComplexityLimit(200),
 	))
 }
 func playgroundHandler() echo.HandlerFunc {

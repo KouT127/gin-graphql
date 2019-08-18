@@ -10,9 +10,13 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Theme
+    Theme,
+    Typography
 } from "@material-ui/core";
+import {useGetTaskQuery} from "../generated/graphql";
 import {useUserState} from "../components/Providers/UserProvider";
+import {Redirect} from "react-router";
+import Routes from "../app/routes";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,50 +46,68 @@ interface Task {
     userName: string,
 }
 
-const rows: Array<Task> = [
-    {id: 'id', title: 'title', description: 'desc', userName: 'user'},
-    {id: 'id', title: 'title', description: 'desc', userName: 'user'},
-    {id: 'id', title: 'title', description: 'desc', userName: 'user'},
-    {id: 'id', title: 'title', description: 'desc', userName: 'user'},
-];
-
 
 const TasksPage: React.FC = () => {
     const classes = useStyles();
-    const {signOut} = useUserState();
+    const {isLoggedIn} = useUserState();
+    const {data, error, loading} = useGetTaskQuery({fetchPolicy: "cache-and-network"});
+    if (loading) return <Typography>Loading...</Typography>;
+    if (error) return <Typography>Error</Typography>;
+    const tasks = data!.tasks.edges.map((edge) => {
+        const node = edge.node;
+        const task: Task = {
+            id: node.id,
+            title: node.title,
+            description: node.description,
+            userName: node.user ? node.user.name : ''
+        };
+        return task
+    });
     return (
         <div className={classes.tasks}>
             <div className={classes.mainSection}>
-                <Card className={classes.card}>
-                    <CardHeader
-                        title={'Tasks'}
-                    />
-                    <CardContent>
-                        <Table className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>ID</TableCell>
-                                    <TableCell>title</TableCell>
-                                    <TableCell>description</TableCell>
-                                    <TableCell>user name</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row, index) => (
-                                    <TableRow key={'tasks-table-row-' + index}>
-                                        <TableCell>{row.id}</TableCell>
-                                        <TableCell>{row.title}</TableCell>
-                                        <TableCell>{row.description}</TableCell>
-                                        <TableCell>{row.userName}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+                {isLoggedIn ? (
+                    <CardTable tasks={tasks}/>
+                ) : (
+                    <Redirect to={Routes.signIn()}/>
+                )}
             </div>
         </div>
     );
 };
+
+const CardTable = (props: { tasks: Array<Task>, }) => {
+    const {tasks} = props;
+    const classes = useStyles();
+    return (
+        <Card className={classes.card}>
+            <CardHeader
+                title={'Tasks'}
+            />
+            <CardContent>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>ID</TableCell>
+                            <TableCell>title</TableCell>
+                            <TableCell>description</TableCell>
+                            <TableCell>user name</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tasks.map((row, index) => (
+                            <TableRow key={'tasks-table-row-' + index}>
+                                <TableCell>{row.id}</TableCell>
+                                <TableCell>{row.title}</TableCell>
+                                <TableCell>{row.description}</TableCell>
+                                <TableCell>{row.userName}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    )
+}
 
 export default TasksPage;

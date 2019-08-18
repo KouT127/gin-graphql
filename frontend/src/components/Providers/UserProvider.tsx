@@ -7,6 +7,7 @@ interface User {
     name: string | null,
     email: string | null,
     emailVerified: boolean,
+    token: string | null,
 }
 
 interface UserState {
@@ -39,7 +40,7 @@ const useUserState = () => {
     const isLoggedIn = userState && userState.user;
 
     const authConnect = () => {
-        firebase.default.auth().onAuthStateChanged((user: FirebaseType.User | null) => {
+        firebase.default.auth().onAuthStateChanged(async (user: FirebaseType.User | null) => {
                 if (!user) {
                     return;
                 }
@@ -48,7 +49,8 @@ const useUserState = () => {
                     id: user.uid,
                     name: user.displayName,
                     email: user.email,
-                    emailVerified: user.emailVerified
+                    emailVerified: user.emailVerified,
+                    token: await user.getIdToken()
                 };
                 const userData: UserState = {user: authUser};
                 setUserState && setUserState(userData)

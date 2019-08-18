@@ -1,0 +1,15 @@
+query GetTask{
+    tasks(first:10){
+        totalCount
+        edges{
+            node{
+                id
+                title
+                description
+                user{
+                    name
+                }
+            }
+        }
+    }
+}

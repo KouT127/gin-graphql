@@ -2,6 +2,7 @@ import {AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Typography} fr
 import React from "react";
 import Routes from "../app/routes";
 import {Link} from "react-router-dom";
+import {useUserState} from "./Providers/UserProvider";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -13,15 +14,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MyAppBar: React.FC = () => {
     const classes = useStyles();
+    const {isLoggedIn, signOut} = useUserState();
+
+    const handleSignOut = () => {
+        signOut();
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" className={classes.title}>
                     GraphQL Sample
                 </Typography>
-                <Button color="inherit"
-                        component={Link} to={Routes.signIn()}
-                >Login</Button>
+                {
+                    isLoggedIn ?
+                        <Button color="inherit"
+                                component={Link} to={Routes.signIn()}
+                                onClick={handleSignOut}>
+                            SignOut
+                        </Button> :
+                        <Button color="inherit"
+                                component={Link} to={Routes.signIn()}>
+                            SingIn
+                        </Button>
+                }
             </Toolbar>
         </AppBar>
     )

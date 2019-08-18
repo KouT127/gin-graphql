@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -142,3 +144,52 @@ export type UserInput = {
   gender: Scalars['String'],
   tasks?: Maybe<Array<Maybe<TaskInput>>>,
 };
+export type GetTaskQueryVariables = {};
+
+
+export type GetTaskQuery = (
+  { __typename?: 'Query' }
+  & { tasks: (
+    { __typename?: 'TaskConnection' }
+    & Pick<TaskConnection, 'totalCount'>
+    & { edges: Array<(
+      { __typename?: 'TaskEdge' }
+      & { node: (
+        { __typename?: 'Task' }
+        & Pick<Task, 'id' | 'title' | 'description'>
+        & { user: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'name'>
+        )> }
+      ) }
+    )> }
+  ) }
+);
+
+export const GetTaskDocument = gql`
+    query GetTask {
+  tasks(first: 10) {
+    totalCount
+    edges {
+      node {
+        id
+        title
+        description
+        user {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+    export function useGetTaskQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTaskQuery, GetTaskQueryVariables>) {
+      return ApolloReactHooks.useQuery<GetTaskQuery, GetTaskQueryVariables>(GetTaskDocument, baseOptions);
+    };
+      export function useGetTaskLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTaskQuery, GetTaskQueryVariables>) {
+        return ApolloReactHooks.useLazyQuery<GetTaskQuery, GetTaskQueryVariables>(GetTaskDocument, baseOptions);
+      };
+      
+export type GetTaskQueryHookResult = ReturnType<typeof useGetTaskQuery>;
+export type GetTaskQueryResult = ApolloReactCommon.QueryResult<GetTaskQuery, GetTaskQueryVariables>;
