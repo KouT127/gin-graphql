@@ -144,6 +144,22 @@ export type UserInput = {
   gender: Scalars['String'],
   tasks?: Maybe<Array<Maybe<TaskInput>>>,
 };
+export type AddUserMutationVariables = {
+  user: UserInput
+};
+
+
+export type AddUserMutation = (
+  { __typename?: 'Mutation' }
+  & { addUser: (
+    { __typename?: 'AddUserPayload' }
+    & { user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name'>
+    )> }
+  ) }
+);
+
 export type GetTasksQueryVariables = {
   first?: Maybe<Scalars['Int']>,
   after?: Maybe<Scalars['String']>
@@ -169,6 +185,24 @@ export type GetTasksQuery = (
   ) }
 );
 
+export const AddUserDocument = gql`
+    mutation addUser($user: UserInput!) {
+  addUser(user: $user) {
+    user {
+      id
+      name
+    }
+  }
+}
+    `;
+export type AddUserMutationFn = ApolloReactCommon.MutationFunction<AddUserMutation, AddUserMutationVariables>;
+
+    export function useAddUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddUserMutation, AddUserMutationVariables>) {
+      return ApolloReactHooks.useMutation<AddUserMutation, AddUserMutationVariables>(AddUserDocument, baseOptions);
+    };
+export type AddUserMutationHookResult = ReturnType<typeof useAddUserMutation>;
+export type AddUserMutationResult = ApolloReactCommon.MutationResult<AddUserMutation>;
+export type AddUserMutationOptions = ApolloReactCommon.BaseMutationOptions<AddUserMutation, AddUserMutationVariables>;
 export const GetTasksDocument = gql`
     query GetTasks($first: Int, $after: String) {
   tasks(first: $first, after: $after) {

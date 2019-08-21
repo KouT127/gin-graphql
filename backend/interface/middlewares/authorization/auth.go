@@ -13,7 +13,6 @@ import (
 func FirebaseAuth() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-
 			opt := option.WithCredentialsFile("./backend/config/development/development.json")
 			app, err := firebase.NewApp(context.Background(), nil, opt)
 			if err != nil {

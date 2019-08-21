@@ -22,7 +22,7 @@ const App: React.FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(connectAuth())
-    }, []);
+    }, [dispatch]);
     return (
         <UserProvider>
             <MainProvider/>

@@ -71,7 +71,7 @@ export const connectAuth = (payload: void): ThunkAction<void, AppState, any, Any
                 }
                 dispatch(loadedUser(userPayload))
             }
-        )
+        );
     };
 };
 

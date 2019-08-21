@@ -17,7 +17,7 @@ const MyAppBar: React.FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {user} = useSelector(userSelector);
-    const isLoggedIn = !!user
+    const isLoggedIn = !!user;
 
     const handleSignOut = () => {
         dispatch(signOut())

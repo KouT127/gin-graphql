@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Button,
     Card,
     CardContent,
     CardHeader,
@@ -13,9 +14,7 @@ import {
     TableRow,
     Theme
 } from "@material-ui/core";
-import {GetTasksQueryVariables, useGetTasksQuery} from "../generated/graphql";
-import {Redirect} from "react-router";
-import Routes from "../app/routes";
+import {GetTasksQueryVariables, TaskInput, useAddUserMutation, useGetTasksQuery, UserInput} from "../generated/graphql";
 import {useSelector} from "react-redux";
 import {userSelector} from "../reducers/UserReducer";
 
@@ -53,7 +52,18 @@ const TasksPage: React.FC = () => {
     const userState = useSelector(userSelector);
     const isLoggedIn = !!userState.user;
     const variable: GetTasksQueryVariables = {first: 10, after: ""};
+    const [addUser, {}] = useAddUserMutation();
     const {data, error, loading} = useGetTasksQuery({fetchPolicy: "cache-and-network", variables: variable},);
+
+    const handleAdd = () => {
+        const task: TaskInput = {title: 'web', description: 'desc', userId: '2'};
+        const input: UserInput = {name: 'name', gender: 'men', tasks: [task, task]};
+        const response = addUser({variables: {user: input}});
+        response.then((response) => {
+            console.log(response.data)
+        })
+    };
+
     if (loading || error) return <CircularProgress/>;
     const tasks = data!.tasks.edges.map((edge) => {
         const node = edge.node;
@@ -71,8 +81,16 @@ const TasksPage: React.FC = () => {
                 {isLoggedIn ? (
                     <CardTable tasks={tasks}/>
                 ) : (
-                    <Redirect to={Routes.signIn()}/>
+                    <CircularProgress/>
                 )}
+                <Card>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleAdd}>
+                        ADD
+                    </Button>
+                </Card>
             </div>
         </div>
     );
@@ -110,6 +128,6 @@ const CardTable = (props: { tasks: Array<Task>, }) => {
             </CardContent>
         </Card>
     )
-}
+};
 
 export default TasksPage;
