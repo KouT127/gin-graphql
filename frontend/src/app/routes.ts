@@ -6,4 +6,8 @@ export default class Routes {
     static signIn = () => {
         return '/users/signin/'
     };
+
+    static items = () => {
+        return '/items/'
+    };
 }

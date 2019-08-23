@@ -11,12 +11,9 @@ import {ApolloProvider} from "@apollo/react-hooks";
 import {createHttpLink} from "apollo-link-http";
 import {useDispatch, useSelector} from "react-redux";
 import {connectAuth, userSelector} from "../../reducers/UserReducer";
+import ItemsPage from "../../pages/ItemsPage";
 
-const useStyles = makeStyles({
-    main: {
-        background: `rgb(21, 32, 43)`
-    },
-});
+const useStyles = makeStyles({});
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
@@ -46,13 +43,12 @@ const MainProvider = () => {
 
     return (
         <ApolloProvider client={client}>
-            <div className={classes.main}>
-                <Router>
-                    <MyAppBar/>
-                    <Route path="/" exact component={TasksPage}/>
-                    <Route path="/users/signin/" exact component={AuthorizationPage}/>
-                </Router>
-            </div>
+            <Router>
+                <MyAppBar/>
+                <Route path="/" exact component={TasksPage}/>
+                <Route path="/users/signin/" exact component={AuthorizationPage}/>
+                <Route path="/items/" exact component={ItemsPage}/>
+            </Router>
         </ApolloProvider>
     )
 };
