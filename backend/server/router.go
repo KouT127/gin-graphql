@@ -4,7 +4,7 @@ import (
 	"github.com/99designs/gqlgen/handler"
 	"github.com/KouT127/gin-sample/backend/config"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/interface/middlewares/authorization"
+	"github.com/KouT127/gin-sample/backend/interface/middlewares"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
 	"github.com/KouT127/gin-sample/backend/interface/resolver"
 	"github.com/labstack/echo/v4"
@@ -28,7 +28,7 @@ func NewRouter() *echo.Echo {
 		AllowHeaders: []string{"authorization", "Content-Type"},
 	}))
 	e.GET("/", playgroundHandler())
-	graph := e.Group("/query", authorization.FirebaseAuth())
+	graph := e.Group("/query", middlewares.FirebaseAuth())
 	{
 		graph.Use(dataloader.LoaderMiddleware())
 		graph.POST("", graphqlHandler(c))
