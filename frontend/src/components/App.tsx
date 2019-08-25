@@ -17,32 +17,42 @@ const App: React.FC = () => {
         dispatch(connectAuth())
     }, [dispatch]);
     return (
-        <MainProvider/>
+        <ApolloClientProvider>
+            <RouteProvider/>
+        </ApolloClientProvider>
     );
 };
 
-const MainProvider = () => {
-    const {user} = useSelector(userSelector);
-    const token = user && user.token ? `Bearer ${user.token}` : '';
-    const client = new ApolloClient({
-        link: createHttpLink({
-            uri: 'http://localhost:8080/query',
-            headers: {
-                authorization: token
-            }
-        }),
+const getApolloClient = (token: string) => {
+    const link = createHttpLink({
+        uri: 'http://localhost:8080/query',
+        headers: {
+            authorization: token
+        }
+    });
+    return new ApolloClient({
+        link: link,
         cache: new InMemoryCache(),
     });
+};
 
+const ApolloClientProvider = (props: any) => {
+    const {user} = useSelector(userSelector);
+    const token = user && user.token ? `Bearer ${user.token}` : '';
+    const client = getApolloClient(token);
     return (
-        <ApolloProvider client={client}>
-            <Router>
-                <MyAppBar/>
-                <Route path="/" exact component={TasksPage}/>
-                <Route path="/users/signin/" exact component={AuthorizationPage}/>
-                <Route path="/items/" exact component={ItemsPage}/>
-            </Router>
-        </ApolloProvider>
+        <ApolloProvider client={client} {...props}/>
+    )
+};
+
+const RouteProvider = () => {
+    return (
+        <Router>
+            <MyAppBar/>
+            <Route path="/" exact component={TasksPage}/>
+            <Route path="/users/signin/" exact component={AuthorizationPage}/>
+            <Route path="/items/" exact component={ItemsPage}/>
+        </Router>
     )
 };
 

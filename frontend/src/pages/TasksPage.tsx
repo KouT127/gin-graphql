@@ -55,6 +55,8 @@ const TasksPage: React.FC = () => {
     const [addUser, {}] = useAddUserMutation();
     const {data, error, loading} = useGetTasksQuery({fetchPolicy: "cache-and-network", variables: variable},);
 
+    if (loading || error) return <CircularProgress/>;
+
     const handleAdd = () => {
         const task: TaskInput = {title: 'web', description: 'desc', userId: '2'};
         const input: UserInput = {name: 'name', gender: 'men', tasks: [task, task]};
@@ -63,8 +65,6 @@ const TasksPage: React.FC = () => {
             console.log(response.data)
         })
     };
-
-    if (loading || error) return <CircularProgress/>;
     const tasks = data!.tasks.edges.map((edge) => {
         const node = edge.node;
         const task: Task = {
