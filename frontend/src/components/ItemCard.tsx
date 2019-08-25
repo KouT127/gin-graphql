@@ -1,4 +1,4 @@
-import {Button, Card, CardContent, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import React from "react";
 import {IItem} from "../pages/ItemsPage";
 
@@ -18,28 +18,27 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+type ItemCardProps = {
+    item: IItem,
+    handleAdd: (e: React.MouseEvent) => void,
+}
 
-const ItemCard = (props: { item: IItem }) => {
+const ItemCard = (props: ItemCardProps) => {
     const classes = useStyles();
-    const item = props.item;
+    const {item, handleAdd} = props;
 
     return <Grid item>
         <Card className={classes.card}>
             <img src={item.imageUrl}/>
             <CardContent className={classes.content}>
-                <Typography>
-                    {item.name}
-                </Typography>
-                <Typography className={classes.description}>
-                    {item.description}
-                </Typography>
-                <Typography>
-                    Price {item.price}
-                </Typography>
+                <h3>{item.name}</h3>
+                <p className={classes.description}>{item.description}</p>
+                <p>Price ￥{item.price}</p>
             </CardContent>
             <Button variant={'contained'}
                     color={'primary'}
                     fullWidth={true}
+                    onClick={handleAdd}
             >
                 Add to cart
             </Button>

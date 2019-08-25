@@ -13,13 +13,13 @@ export interface User {
     token: string | null,
 }
 
-export interface UserState {
+export interface IUserState {
     user: User | null
 }
 
 export const userSelector = (state: AppState) => state.userState;
 
-const initialUserState: UserState = {
+const initialUserState: IUserState = {
     user: null
 };
 
@@ -43,7 +43,7 @@ export const loadedUser = (payload: loadedUserPayload): LoadedUserAction => {
     };
 };
 
-export const userStateReducer = (state: UserState = initialUserState, action: LoadedUserAction) => {
+export const userStateReducer = (state: IUserState = initialUserState, action: LoadedUserAction) => {
     switch (action.type) {
         case "LOADED_USERS": {
             const user = action.payload.user;
@@ -87,7 +87,7 @@ export const signOut = (payload: void): ThunkAction<void, AppState, any, AnyActi
     })
 };
 
-export const userActionCreator = {
+export const userActionCreators = {
     connectAuth,
     signIn,
     signOut

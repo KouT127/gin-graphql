@@ -1,4 +1,4 @@
-export default class Routes {
+export default class Route {
     static top = () => {
         return ''
     };

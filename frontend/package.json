@@ -27,7 +27,8 @@
     "apollo-hooks-codegen": "1.2.0",
     "react-redux": "^7.1.0",
     "redux": "4.0.1",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "lodash": "4.17.15"
   },
   "scripts": {
     "start": "react-scripts start",

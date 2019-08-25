@@ -1,6 +1,9 @@
 import React from "react";
 import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import ItemCard from "../components/ItemCard";
+import {useDispatch} from "react-redux";
+import {AddCartPayload} from "../app/interfaces/Cart";
+import {addCart} from "../reducers/CartReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,6 +30,12 @@ export interface IItem {
 
 const ItemsPage: React.FC = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const handleAdd = (item: IItem) => (e: React.MouseEvent) => {
+        const payload: AddCartPayload = {item: item};
+        dispatch(addCart(payload))
+    };
 
     const item: IItem = {
         id: '1',
@@ -38,10 +47,13 @@ const ItemsPage: React.FC = () => {
     const items: Array<IItem> = [item, item, item, item, item, item];
     return (
         <Grid container className={classes.items}>
-            <Grid xs={12} className={classes.gridSection}>
+            <Grid item xs={12} className={classes.gridSection}>
                 <Grid container item justify='flex-start' spacing={2}>
                     {items.map((item, index) => {
-                        return <ItemCard item={item}></ItemCard>
+                        return <ItemCard
+                            key={index}
+                            item={item}
+                            handleAdd={handleAdd(item)}/>
                     })}
                 </Grid>
             </Grid>
