@@ -6,47 +6,51 @@ import (
 	"strconv"
 )
 
-const taskKey = "task:"
+const itemKey = "item:"
 
-type TaskConnection struct {
+type ItemConnection struct {
 	TotalCount int
 	PageInfo   *PageInfo
-	Edges      []*TaskEdge
+	Edges      []*ItemEdge
 }
-type TaskEdge struct {
+type ItemEdge struct {
 	Cursor string
-	Node   *Task
+	Node   *Item
 }
 
-type Task struct {
+type Item struct {
 	ID          string
-	UserRefer   int
-	Title       string
+	Name        string
 	Description string
+	Price       float32
 }
 
-func (c *TaskConnection) registerConnection(cnt int, es []*TaskEdge) *TaskConnection {
+type Cart struct {
+	CartItems []*Item
+}
+
+func (c *ItemConnection) registerConnection(cnt int, es []*ItemEdge) *ItemConnection {
 	c.PageInfo = &PageInfo{}
 	c.Edges = es
 	c.TotalCount = cnt
 	return c
 }
 
-func (e *TaskEdge) registerEdge(t *Task, offset int) *TaskEdge {
+func (e *ItemEdge) registerEdge(t *Item, offset int) *ItemEdge {
 	e.Cursor = util.Base64Encode(model.CursorKey + strconv.Itoa(offset))
 	e.Node = t
 	return e
 }
 
-func (t *Task) registerTask(m *model.Task) *Task {
+func (t *Item) registerTask(m *model.Item) *Item {
 	t.ID = util.Base64Encode(taskKey + strconv.Itoa(int(m.ID)))
-	t.Title = m.Title
+	t.Name = m.Name
 	t.Description = m.Description
-	t.UserRefer = m.UserRefer
+	t.Price = m.Price
 	return t
 }
 
-func (c *ItemConnection) registerPageInfo(e []*ItemEdge) *PageInfo {
+func (c *TaskConnection) registerPageInfo(e []*TaskEdge) *PageInfo {
 	p := &PageInfo{
 		//StartCursor:     util.Base64Encode(c.Edges[0].Cursor),
 		//EndCursor:       util.Base64Encode(c.Edges[len(c.Edges)-1].Cursor),
@@ -56,16 +60,16 @@ func (c *ItemConnection) registerPageInfo(e []*ItemEdge) *PageInfo {
 	return p
 }
 
-func NewItemEdge(m *model.Item, offset int) *ItemEdge {
-	t := &Item{}
+func NewTaskEdge(m *model.Task, offset int) *TaskEdge {
+	t := &Task{}
 	t.registerTask(m)
-	edge := &ItemEdge{}
+	edge := &TaskEdge{}
 	edge = edge.registerEdge(t, offset)
 	return edge
 }
 
-func NewItemConnection(cnt int, edge []*ItemEdge) *ItemConnection {
-	conn := &ItemConnection{}
+func NewTaskConnection(cnt int, edge []*TaskEdge) *TaskConnection {
+	conn := &TaskConnection{}
 	conn.TotalCount = cnt
 	conn.PageInfo = conn.registerPageInfo(edge)
 	conn.Edges = edge

@@ -16,6 +16,10 @@ type Config struct {
 		DbName string
 		Option string
 	}
+
+	Application struct {
+		IsDebug bool
+	}
 }
 
 type environment int

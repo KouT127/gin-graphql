@@ -22,6 +22,7 @@ type User struct {
 	Gender   string
 	PhotoURL string
 	Active   bool
+	Cart     []*Item
 }
 
 func NewUser(user *model.User) *User {
@@ -32,6 +33,7 @@ func NewUser(user *model.User) *User {
 		Gender:   user.Gender,
 		PhotoURL: user.PhotoURL,
 		Active:   user.Active,
+		Cart:     []*Item{},
 	}
 	return u
 }

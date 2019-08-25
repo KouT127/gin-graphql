@@ -10,6 +10,10 @@ import (
 
 type userResolver struct{ *Resolver }
 
+func (r *userResolver) Cart(ctx context.Context, obj *graph.User) (*graph.Cart, error) {
+	panic("implement me")
+}
+
 func (r *userResolver) ID(ctx context.Context, obj *graph.User) (string, error) {
 	return obj.ID, nil
 }

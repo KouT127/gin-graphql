@@ -4,6 +4,7 @@ import (
 	"context"
 	firebase "firebase.google.com/go"
 	"fmt"
+	"github.com/KouT127/gin-sample/backend/config"
 	"github.com/labstack/echo/v4"
 	"google.golang.org/api/option"
 	"net/http"
@@ -13,6 +14,10 @@ import (
 func FirebaseAuth() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
+			if config := config.NewConfig(); config.Application.IsDebug {
+				err := next(c)
+				return err
+			}
 			opt := option.WithCredentialsFile("./backend/config/development/development.json")
 			app, err := firebase.NewApp(context.Background(), nil, opt)
 			if err != nil {

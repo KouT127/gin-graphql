@@ -7,4 +7,11 @@ type Query {
         before: String,
         query: String
     ):TaskConnection!
+    items(
+        first: Int,
+        after: String,
+        last: Int,
+        before: String,
+        query: String
+    ):ItemConnection!
 }

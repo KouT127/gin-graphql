@@ -9,6 +9,7 @@ type User {
         before: String,
         query: String
     ):TaskConnection
+    cart: Cart!
 }
 
 type UserConnection {

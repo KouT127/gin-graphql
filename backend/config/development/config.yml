@@ -6,3 +6,6 @@ database:
   port:   "3306"
   dbName: "go_tutorial"
   option: "charset=utf8&parseTime=true"
+
+application:
+  isDebug: True

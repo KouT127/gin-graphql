@@ -27,6 +27,10 @@ func (r *Resolver) User() generated.UserResolver {
 	return &userResolver{r}
 }
 
+func (r *Resolver) Item() generated.ItemResolver {
+	return &itemResolver{r}
+}
+
 type mutationResolver struct{ *Resolver }
 
 func (r *mutationResolver) AddUser(ctx context.Context, user generated.UserInput) (*generated.AddUserPayload, error) {
@@ -37,11 +41,25 @@ func (r *mutationResolver) AddUser(ctx context.Context, user generated.UserInput
 	}
 	return payload, nil
 }
+
 func (r *mutationResolver) AddTask(ctx context.Context, input generated.TaskInput) (*generated.AddTaskPayload, error) {
 	panic("not implemented")
 }
 
 type queryResolver struct{ *Resolver }
+
+func (r *queryResolver) Items(ctx context.Context, first *int, after *string, last *int, before *string, query *string) (*graph.ItemConnection, error) {
+	q, err := model.NewQuery(first, after, last, before, query)
+	if err != nil {
+		return nil, err
+	}
+	uc := usecase.NewItemUsecase()
+	conn, err := uc.AllItems(q, nil)
+	if err != nil {
+		return conn, err
+	}
+	return conn, nil
+}
 
 func (r *queryResolver) User(ctx context.Context, id *int) (*graph.User, error) {
 	ldr, err := dataloader.CtxLoaders(ctx)
