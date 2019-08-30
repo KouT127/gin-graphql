@@ -5,10 +5,10 @@ migrate:
 show-migrations:
 	 mysqldef -uroot go_tutorial --export > schema.sql  
 
-show-migrate-mysqldef:
+mysqldef-dry:
 	 mysqldef -uroot go_tutorial --dry-run < schema.sql
 
-migrate-mysqldef:
+mysqldef:
 	 mysqldef -uroot go_tutorial < schema.sql
 
 gql-generate:
