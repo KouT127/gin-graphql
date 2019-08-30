@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    container_name: mysql
+    image: mysql:8.0
+    volumes:
+#      - "./conf:/etc/mysql/"
+      - "./db:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: go_tutorial
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3306:3306"
+volumes:
+  db: 

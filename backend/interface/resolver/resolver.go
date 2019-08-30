@@ -4,10 +4,12 @@ import (
 	"context"
 	"github.com/KouT127/gin-sample/backend/application/usecase"
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	"github.com/KouT127/gin-sample/backend/interface/controller"
+	"github.com/KouT127/gin-sample/backend/infrastracture/database"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
+	"github.com/KouT127/gin-sample/backend/util"
+	"strconv"
 )
 
 // THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.
@@ -34,12 +36,36 @@ func (r *Resolver) Item() generated.ItemResolver {
 type mutationResolver struct{ *Resolver }
 
 func (r *mutationResolver) AddUser(ctx context.Context, user generated.UserInput) (*generated.AddUserPayload, error) {
-	uc := controller.NewUserController()
-	payload, err := uc.AddTask(&user)
-	if err != nil {
-		return payload, err
+	db := database.NewDB()
+	u := model.User{
+		Name:   user.Name,
+		Gender: user.Gender,
+		Active: true,
 	}
-	return payload, nil
+	db.Save(&u)
+	for _, task := range user.Tasks {
+		t := model.Task{
+			UserRefer:   u.ID,
+			Title:       task.Title,
+			Description: task.Description,
+			DeletedAt:   nil,
+		}
+		db.Save(&t)
+	}
+	id := strconv.Itoa(int(u.ID))
+	ecd := util.Base64Encode("user:" + id)
+	usr := graph.User{
+		ID:       id,
+		Name:     u.Name,
+		BirthDay: u.Gender,
+		Active:   true,
+	}
+	payload := generated.AddUserPayload{
+		ClientMutationID: &ecd,
+		User:             &usr,
+	}
+	return &payload, nil
+
 }
 
 func (r *mutationResolver) AddTask(ctx context.Context, input generated.TaskInput) (*generated.AddTaskPayload, error) {
