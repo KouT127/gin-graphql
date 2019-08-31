@@ -1,11 +1,11 @@
-package server
+package infrastracture
 
 import (
 	"github.com/99designs/gqlgen/handler"
+	"github.com/KouT127/gin-sample/backend/application/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/config"
-	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/interface/middlewares"
-	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
+	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares"
+	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares/dataloader"
 	"github.com/KouT127/gin-sample/backend/interface/resolver"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

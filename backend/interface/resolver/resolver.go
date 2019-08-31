@@ -2,13 +2,13 @@ package resolver
 
 import (
 	"context"
+	"github.com/KouT127/gin-sample/backend/application/graphql/generated"
+	"github.com/KouT127/gin-sample/backend/application/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/application/usecase"
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
-	"github.com/KouT127/gin-sample/backend/infrastracture/repository"
-	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
-	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
-	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
+	"github.com/KouT127/gin-sample/backend/infrastracture/middlewares/dataloader"
+	"github.com/KouT127/gin-sample/backend/interface/repository"
 	"github.com/KouT127/gin-sample/backend/util"
 	"strconv"
 )

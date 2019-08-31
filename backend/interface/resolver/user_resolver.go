@@ -2,9 +2,9 @@ package resolver
 
 import (
 	"context"
+	"github.com/KouT127/gin-sample/backend/application/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/application/usecase"
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 	"strconv"
 )
 

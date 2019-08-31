@@ -1,8 +1,8 @@
 package usecase
 
 import (
+	. "github.com/KouT127/gin-sample/backend/application/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	. "github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 )
 
 type TaskUsecase interface {

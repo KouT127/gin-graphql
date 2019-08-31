@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
+	"github.com/KouT127/gin-sample/backend/application/graphql/graph"
 	"github.com/vektah/gqlparser"
 	"github.com/vektah/gqlparser/ast"
 )
@@ -697,7 +697,7 @@ func (ec *executionContext) field_Mutation_addTask_args(ctx context.Context, raw
 	args := map[string]interface{}{}
 	var arg0 TaskInput
 	if tmp, ok := rawArgs["input"]; ok {
-		arg0, err = ec.unmarshalNTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, tmp)
+		arg0, err = ec.unmarshalNTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -711,7 +711,7 @@ func (ec *executionContext) field_Mutation_addUser_args(ctx context.Context, raw
 	args := map[string]interface{}{}
 	var arg0 UserInput
 	if tmp, ok := rawArgs["user"]; ok {
-		arg0, err = ec.unmarshalNUserInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐUserInput(ctx, tmp)
+		arg0, err = ec.unmarshalNUserInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -987,7 +987,7 @@ func (ec *executionContext) _AddTaskPayload_task(ctx context.Context, field grap
 	res := resTmp.(*graph.Task)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx, field.Selections, res)
+	return ec.marshalOTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _AddUserPayload_clientMutationId(ctx context.Context, field graphql.CollectedField, obj *AddUserPayload) (ret graphql.Marshaler) {
@@ -1055,7 +1055,7 @@ func (ec *executionContext) _AddUserPayload_user(ctx context.Context, field grap
 	res := resTmp.(*graph.User)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Cart_CartItems(ctx context.Context, field graphql.CollectedField, obj *graph.Cart) (ret graphql.Marshaler) {
@@ -1092,7 +1092,7 @@ func (ec *executionContext) _Cart_CartItems(ctx context.Context, field graphql.C
 	res := resTmp.([]*graph.Item)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Item_id(ctx context.Context, field graphql.CollectedField, obj *graph.Item) (ret graphql.Marshaler) {
@@ -1314,7 +1314,7 @@ func (ec *executionContext) _ItemConnection_edges(ctx context.Context, field gra
 	res := resTmp.([]*graph.ItemEdge)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemEdge(ctx, field.Selections, res)
+	return ec.marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemEdge(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ItemConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *graph.ItemConnection) (ret graphql.Marshaler) {
@@ -1348,7 +1348,7 @@ func (ec *executionContext) _ItemConnection_pageInfo(ctx context.Context, field 
 	res := resTmp.(*graph.PageInfo)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
+	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ItemEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *graph.ItemEdge) (ret graphql.Marshaler) {
@@ -1422,7 +1422,7 @@ func (ec *executionContext) _ItemEdge_node(ctx context.Context, field graphql.Co
 	res := resTmp.(*graph.Item)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_addUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1466,7 +1466,7 @@ func (ec *executionContext) _Mutation_addUser(ctx context.Context, field graphql
 	res := resTmp.(*AddUserPayload)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNAddUserPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx, field.Selections, res)
+	return ec.marshalNAddUserPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_addTask(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1510,7 +1510,7 @@ func (ec *executionContext) _Mutation_addTask(ctx context.Context, field graphql
 	res := resTmp.(*AddTaskPayload)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNAddTaskPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx, field.Selections, res)
+	return ec.marshalNAddTaskPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PageInfo_startCursor(ctx context.Context, field graphql.CollectedField, obj *graph.PageInfo) (ret graphql.Marshaler) {
@@ -1693,7 +1693,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	res := resTmp.(*graph.User)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_tasks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1737,7 +1737,7 @@ func (ec *executionContext) _Query_tasks(ctx context.Context, field graphql.Coll
 	res := resTmp.(*graph.TaskConnection)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx, field.Selections, res)
+	return ec.marshalNTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_items(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1781,7 +1781,7 @@ func (ec *executionContext) _Query_items(ctx context.Context, field graphql.Coll
 	res := resTmp.(*graph.ItemConnection)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNItemConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemConnection(ctx, field.Selections, res)
+	return ec.marshalNItemConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemConnection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2001,7 +2001,7 @@ func (ec *executionContext) _Task_user(ctx context.Context, field graphql.Collec
 	res := resTmp.(*graph.User)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TaskConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *graph.TaskConnection) (ret graphql.Marshaler) {
@@ -2075,7 +2075,7 @@ func (ec *executionContext) _TaskConnection_edges(ctx context.Context, field gra
 	res := resTmp.([]*graph.TaskEdge)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskEdge(ctx, field.Selections, res)
+	return ec.marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskEdge(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TaskConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *graph.TaskConnection) (ret graphql.Marshaler) {
@@ -2109,7 +2109,7 @@ func (ec *executionContext) _TaskConnection_pageInfo(ctx context.Context, field 
 	res := resTmp.(*graph.PageInfo)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
+	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TaskEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *graph.TaskEdge) (ret graphql.Marshaler) {
@@ -2183,7 +2183,7 @@ func (ec *executionContext) _TaskEdge_node(ctx context.Context, field graphql.Co
 	res := resTmp.(*graph.Task)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx, field.Selections, res)
+	return ec.marshalNTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *graph.User) (ret graphql.Marshaler) {
@@ -2335,7 +2335,7 @@ func (ec *executionContext) _User_tasks(ctx context.Context, field graphql.Colle
 	res := resTmp.(*graph.TaskConnection)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx, field.Selections, res)
+	return ec.marshalOTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_cart(ctx context.Context, field graphql.CollectedField, obj *graph.User) (ret graphql.Marshaler) {
@@ -2372,7 +2372,7 @@ func (ec *executionContext) _User_cart(ctx context.Context, field graphql.Collec
 	res := resTmp.(*graph.Cart)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNCart2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐCart(ctx, field.Selections, res)
+	return ec.marshalNCart2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐCart(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _UserConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *graph.UserConnection) (ret graphql.Marshaler) {
@@ -2446,7 +2446,7 @@ func (ec *executionContext) _UserConnection_edges(ctx context.Context, field gra
 	res := resTmp.([]*graph.UserEdge)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUserEdge(ctx, field.Selections, res)
+	return ec.marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUserEdge(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _UserConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *graph.UserConnection) (ret graphql.Marshaler) {
@@ -2480,7 +2480,7 @@ func (ec *executionContext) _UserConnection_pageInfo(ctx context.Context, field 
 	res := resTmp.(*graph.PageInfo)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
+	return ec.marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐPageInfo(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _UserEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *graph.UserEdge) (ret graphql.Marshaler) {
@@ -2554,7 +2554,7 @@ func (ec *executionContext) _UserEdge_node(ctx context.Context, field graphql.Co
 	res := resTmp.(*graph.User)
 	rctx.Result = res
 	ctx = ec.Tracer.StartFieldChildExecution(ctx)
-	return ec.marshalNUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
@@ -3758,7 +3758,7 @@ func (ec *executionContext) unmarshalInputUserInput(ctx context.Context, obj int
 			}
 		case "tasks":
 			var err error
-			it.Tasks, err = ec.unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
+			it.Tasks, err = ec.unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4627,11 +4627,11 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAddTaskPayload2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx context.Context, sel ast.SelectionSet, v AddTaskPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNAddTaskPayload2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx context.Context, sel ast.SelectionSet, v AddTaskPayload) graphql.Marshaler {
 	return ec._AddTaskPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAddTaskPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx context.Context, sel ast.SelectionSet, v *AddTaskPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNAddTaskPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddTaskPayload(ctx context.Context, sel ast.SelectionSet, v *AddTaskPayload) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4641,11 +4641,11 @@ func (ec *executionContext) marshalNAddTaskPayload2ᚖgithubᚗcomᚋKouT127ᚋg
 	return ec._AddTaskPayload(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNAddUserPayload2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx context.Context, sel ast.SelectionSet, v AddUserPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNAddUserPayload2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx context.Context, sel ast.SelectionSet, v AddUserPayload) graphql.Marshaler {
 	return ec._AddUserPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAddUserPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx context.Context, sel ast.SelectionSet, v *AddUserPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNAddUserPayload2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐAddUserPayload(ctx context.Context, sel ast.SelectionSet, v *AddUserPayload) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4669,11 +4669,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCart2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐCart(ctx context.Context, sel ast.SelectionSet, v graph.Cart) graphql.Marshaler {
+func (ec *executionContext) marshalNCart2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐCart(ctx context.Context, sel ast.SelectionSet, v graph.Cart) graphql.Marshaler {
 	return ec._Cart(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCart2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐCart(ctx context.Context, sel ast.SelectionSet, v *graph.Cart) graphql.Marshaler {
+func (ec *executionContext) marshalNCart2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐCart(ctx context.Context, sel ast.SelectionSet, v *graph.Cart) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4725,11 +4725,11 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNItem2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v graph.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v graph.Item) graphql.Marshaler {
 	return ec._Item(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v []*graph.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v []*graph.Item) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4753,7 +4753,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsa
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx, sel, v[i])
+			ret[i] = ec.marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4766,7 +4766,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsa
 	return ret
 }
 
-func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v *graph.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItem(ctx context.Context, sel ast.SelectionSet, v *graph.Item) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4776,11 +4776,11 @@ func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampl
 	return ec._Item(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNItemConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemConnection(ctx context.Context, sel ast.SelectionSet, v graph.ItemConnection) graphql.Marshaler {
+func (ec *executionContext) marshalNItemConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemConnection(ctx context.Context, sel ast.SelectionSet, v graph.ItemConnection) graphql.Marshaler {
 	return ec._ItemConnection(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNItemConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemConnection(ctx context.Context, sel ast.SelectionSet, v *graph.ItemConnection) graphql.Marshaler {
+func (ec *executionContext) marshalNItemConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemConnection(ctx context.Context, sel ast.SelectionSet, v *graph.ItemConnection) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4790,11 +4790,11 @@ func (ec *executionContext) marshalNItemConnection2ᚖgithubᚗcomᚋKouT127ᚋg
 	return ec._ItemConnection(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNItemEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v graph.ItemEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNItemEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v graph.ItemEdge) graphql.Marshaler {
 	return ec._ItemEdge(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.ItemEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.ItemEdge) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4818,7 +4818,7 @@ func (ec *executionContext) marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNItemEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemEdge(ctx, sel, v[i])
+			ret[i] = ec.marshalNItemEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemEdge(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4831,7 +4831,7 @@ func (ec *executionContext) marshalNItemEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 	return ret
 }
 
-func (ec *executionContext) marshalNItemEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v *graph.ItemEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNItemEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐItemEdge(ctx context.Context, sel ast.SelectionSet, v *graph.ItemEdge) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4855,11 +4855,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNTask2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v graph.Task) graphql.Marshaler {
+func (ec *executionContext) marshalNTask2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v graph.Task) graphql.Marshaler {
 	return ec._Task(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v *graph.Task) graphql.Marshaler {
+func (ec *executionContext) marshalNTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v *graph.Task) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4869,11 +4869,11 @@ func (ec *executionContext) marshalNTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampl
 	return ec._Task(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNTaskConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v graph.TaskConnection) graphql.Marshaler {
+func (ec *executionContext) marshalNTaskConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v graph.TaskConnection) graphql.Marshaler {
 	return ec._TaskConnection(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v *graph.TaskConnection) graphql.Marshaler {
+func (ec *executionContext) marshalNTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v *graph.TaskConnection) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4883,11 +4883,11 @@ func (ec *executionContext) marshalNTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋg
 	return ec._TaskConnection(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNTaskEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v graph.TaskEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNTaskEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v graph.TaskEdge) graphql.Marshaler {
 	return ec._TaskEdge(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.TaskEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.TaskEdge) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4911,7 +4911,7 @@ func (ec *executionContext) marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTaskEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskEdge(ctx, sel, v[i])
+			ret[i] = ec.marshalNTaskEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskEdge(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4924,7 +4924,7 @@ func (ec *executionContext) marshalNTaskEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 	return ret
 }
 
-func (ec *executionContext) marshalNTaskEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v *graph.TaskEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNTaskEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskEdge(ctx context.Context, sel ast.SelectionSet, v *graph.TaskEdge) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4934,15 +4934,15 @@ func (ec *executionContext) marshalNTaskEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑs
 	return ec._TaskEdge(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (TaskInput, error) {
+func (ec *executionContext) unmarshalNTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (TaskInput, error) {
 	return ec.unmarshalInputTaskInput(ctx, v)
 }
 
-func (ec *executionContext) marshalNUser2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v graph.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v graph.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v *graph.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v *graph.User) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -4952,11 +4952,11 @@ func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampl
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v graph.UserEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNUserEdge2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v graph.UserEdge) graphql.Marshaler {
 	return ec._UserEdge(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.UserEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v []*graph.UserEdge) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4980,7 +4980,7 @@ func (ec *executionContext) marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUserEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUserEdge(ctx, sel, v[i])
+			ret[i] = ec.marshalNUserEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUserEdge(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4993,7 +4993,7 @@ func (ec *executionContext) marshalNUserEdge2ᚕᚖgithubᚗcomᚋKouT127ᚋgin�
 	return ret
 }
 
-func (ec *executionContext) marshalNUserEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v *graph.UserEdge) graphql.Marshaler {
+func (ec *executionContext) marshalNUserEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUserEdge(ctx context.Context, sel ast.SelectionSet, v *graph.UserEdge) graphql.Marshaler {
 	if v == nil {
 		if !ec.HasError(graphql.GetResolverContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -5003,7 +5003,7 @@ func (ec *executionContext) marshalNUserEdge2ᚖgithubᚗcomᚋKouT127ᚋginᚑs
 	return ec._UserEdge(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNUserInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐUserInput(ctx context.Context, v interface{}) (UserInput, error) {
+func (ec *executionContext) unmarshalNUserInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐUserInput(ctx context.Context, v interface{}) (UserInput, error) {
 	return ec.unmarshalInputUserInput(ctx, v)
 }
 
@@ -5279,11 +5279,11 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return ec.marshalOInt2int(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalOPageInfo2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐPageInfo(ctx context.Context, sel ast.SelectionSet, v graph.PageInfo) graphql.Marshaler {
+func (ec *executionContext) marshalOPageInfo2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐPageInfo(ctx context.Context, sel ast.SelectionSet, v graph.PageInfo) graphql.Marshaler {
 	return ec._PageInfo(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐPageInfo(ctx context.Context, sel ast.SelectionSet, v *graph.PageInfo) graphql.Marshaler {
+func (ec *executionContext) marshalOPageInfo2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐPageInfo(ctx context.Context, sel ast.SelectionSet, v *graph.PageInfo) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -5313,33 +5313,33 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return ec.marshalOString2string(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalOTask2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v graph.Task) graphql.Marshaler {
+func (ec *executionContext) marshalOTask2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v graph.Task) graphql.Marshaler {
 	return ec._Task(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v *graph.Task) graphql.Marshaler {
+func (ec *executionContext) marshalOTask2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v *graph.Task) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Task(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOTaskConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v graph.TaskConnection) graphql.Marshaler {
+func (ec *executionContext) marshalOTaskConnection2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v graph.TaskConnection) graphql.Marshaler {
 	return ec._TaskConnection(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v *graph.TaskConnection) graphql.Marshaler {
+func (ec *executionContext) marshalOTaskConnection2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐTaskConnection(ctx context.Context, sel ast.SelectionSet, v *graph.TaskConnection) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TaskConnection(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (TaskInput, error) {
+func (ec *executionContext) unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (TaskInput, error) {
 	return ec.unmarshalInputTaskInput(ctx, v)
 }
 
-func (ec *executionContext) unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) ([]*TaskInput, error) {
+func (ec *executionContext) unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) ([]*TaskInput, error) {
 	var vSlice []interface{}
 	if v != nil {
 		if tmp1, ok := v.([]interface{}); ok {
@@ -5351,7 +5351,7 @@ func (ec *executionContext) unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋg
 	var err error
 	res := make([]*TaskInput, len(vSlice))
 	for i := range vSlice {
-		res[i], err = ec.unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, vSlice[i])
+		res[i], err = ec.unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -5359,19 +5359,19 @@ func (ec *executionContext) unmarshalOTaskInput2ᚕᚖgithubᚗcomᚋKouT127ᚋg
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (*TaskInput, error) {
+func (ec *executionContext) unmarshalOTaskInput2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx context.Context, v interface{}) (*TaskInput, error) {
 	if v == nil {
 		return nil, nil
 	}
-	res, err := ec.unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
+	res, err := ec.unmarshalOTaskInput2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgeneratedᚐTaskInput(ctx, v)
 	return &res, err
 }
 
-func (ec *executionContext) marshalOUser2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v graph.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2githubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v graph.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋinterfaceᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v *graph.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋKouT127ᚋginᚑsampleᚋbackendᚋapplicationᚋgraphqlᚋgraphᚐUser(ctx context.Context, sel ast.SelectionSet, v *graph.User) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

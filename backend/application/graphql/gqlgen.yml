@@ -11,7 +11,7 @@ model:
   filename: generated/generated_model.go
 
 autobind:
-  - github.com/KouT127/gin-sample/backend/interface/graphql/graph
+  - github.com/KouT127/gin-sample/backend/application/graphql/graph
 resolver:
   filename: resolver.go
   type: Resolver

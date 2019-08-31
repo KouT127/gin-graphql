@@ -1,5 +1,5 @@
 //+build wireinject
-package server
+package infrastracture
 
 //import (
 //	"github.com/KouT127/gin-sample/backend/application/interactor"

@@ -3,7 +3,7 @@
 package generated
 
 import (
-	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
+	"github.com/KouT127/gin-sample/backend/application/graphql/graph"
 )
 
 type Connection interface {
