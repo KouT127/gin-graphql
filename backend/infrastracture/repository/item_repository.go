@@ -3,10 +3,15 @@ package repository
 import (
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
-	. "github.com/jinzhu/gorm"
 )
 
-func FetchItemsCount() (int, error) {
+func NewItemRepository() *itemRepository {
+	return &itemRepository{}
+}
+
+type itemRepository struct{}
+
+func (r *itemRepository) FetchItemsCount() (int, error) {
 	var cnt int
 	db := database.NewDB()
 	qs := db.Model(&model.Item{})
@@ -17,20 +22,21 @@ func FetchItemsCount() (int, error) {
 	return cnt, nil
 }
 
-func FindItems(scopes []func(db *DB) *DB) ([]*model.Item, error) {
+func (r *itemRepository) FindItems(q *model.Query) (int, []*model.Item, error) {
 	var items []*model.Item
+	idx, scopes := CalculatePageInfo(q)
 	db := database.NewDB()
 	rows, err := db.Model(&model.Item{}).Scopes(scopes...).Rows()
 	if err != nil {
-		return []*model.Item{}, err
+		return idx, nil, err
 	}
 	for rows.Next() {
 		item := &model.Item{}
 		err := db.ScanRows(rows, item)
 		if err != nil {
-			return nil, err
+			return idx, nil, err
 		}
 		items = append(items, item)
 	}
-	return items, nil
+	return idx, items, nil
 }

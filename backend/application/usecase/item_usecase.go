@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"github.com/KouT127/gin-sample/backend/domain/model"
-	"github.com/KouT127/gin-sample/backend/infrastracture/repository"
+	"github.com/KouT127/gin-sample/backend/domain/repository"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 )
 
@@ -10,25 +10,28 @@ type ItemUsecase interface {
 	AllItems(q *model.Query, id *int) (*graph.ItemConnection, error)
 }
 
-type itemUsecase struct{}
+type itemUsecase struct {
+	ir repository.ItemRepository
+}
 
-func NewItemUsecase() *itemUsecase {
-	return &itemUsecase{}
+func NewItemUsecase(ir repository.ItemRepository) *itemUsecase {
+	return &itemUsecase{
+		ir: ir,
+	}
 }
 
 func (iu *itemUsecase) AllItems(q *model.Query, id *int) (*graph.ItemConnection, error) {
 	var (
-		cnt   int
-		edges []*graph.ItemEdge
-		items []*model.Item
-		err   error
+		cnt, idx int
+		edges    []*graph.ItemEdge
+		items    []*model.Item
+		err      error
 	)
-	cnt, err = repository.FetchItemsCount()
+	cnt, err = iu.ir.FetchItemsCount()
 	if err != nil {
 		return nil, err
 	}
-	idx, scopes := repository.CalculatePageInfo(q)
-	items, err = repository.FindItems(scopes)
+	idx, items, err = iu.ir.FindItems(q)
 	if err != nil {
 		return nil, err
 	}

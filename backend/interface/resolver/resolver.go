@@ -5,6 +5,7 @@ import (
 	"github.com/KouT127/gin-sample/backend/application/usecase"
 	"github.com/KouT127/gin-sample/backend/domain/model"
 	"github.com/KouT127/gin-sample/backend/infrastracture/database"
+	"github.com/KouT127/gin-sample/backend/infrastracture/repository"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/generated"
 	"github.com/KouT127/gin-sample/backend/interface/graphql/graph"
 	"github.com/KouT127/gin-sample/backend/interface/middlewares/dataloader"
@@ -79,7 +80,8 @@ func (r *queryResolver) Items(ctx context.Context, first *int, after *string, la
 	if err != nil {
 		return nil, err
 	}
-	uc := usecase.NewItemUsecase()
+	ir := repository.NewItemRepository()
+	uc := usecase.NewItemUsecase(ir)
 	conn, err := uc.AllItems(q, nil)
 	if err != nil {
 		return conn, err
